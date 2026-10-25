@@ -1,0 +1,8 @@
+node_modules/
+.env
+.DS_Store
+*.log
+.firebase/
+scratch/
+data/*.jsonl
+data/*.csv

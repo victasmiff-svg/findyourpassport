@@ -1,0 +1,34 @@
+{
+  "sessions": {
+    "sid_1791820127093_6w8lqfs": "victor@example.com",
+    "sid_1791917063433_dwwm0g5": "traveler@gmail.com",
+    "sid_admin_victasmiff": "victasmiff@gmail.com",
+    "sid_1792957307641_so7by4n": "traveler@gmail.com",
+    "sid_1792957307645_ehl5f3b": "victasmiff@gmail.com",
+    "sid_1792957352344_ruzp77p": "victasmiff@gmail.com",
+    "sid_1792959338145_ratsh0p": "victasmiff@gmail.com"
+  },
+  "profiles": {
+    "victor@example.com": {
+      "id": "usr_1791820127093",
+      "email": "victor@example.com",
+      "name": "Victor Explorer",
+      "picture": "",
+      "given_name": "Victor"
+    },
+    "victasmiff@gmail.com": {
+      "id": "custom_1792959338142",
+      "email": "victasmiff@gmail.com",
+      "name": "Victor Smith",
+      "picture": "",
+      "given_name": "Victor"
+    },
+    "traveler@gmail.com": {
+      "id": "custom_1792959335421",
+      "email": "traveler@gmail.com",
+      "name": "Standard User",
+      "picture": "",
+      "given_name": "Standard"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "findyourpassport",
+  "version": "1.0.0",
+  "description": "FindYourPassport - The Cartographer's Compass for Precision Travel Discovery",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "travel",
+    "cartographer",
+    "gemini",
+    "points-and-miles",
+    "flight-search"
+  ],
+  "author": "FindYourPassport Team",
+  "license": "MIT"
+}

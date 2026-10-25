@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FindYourPassport | The Cartographer's Compass</title>
+  <meta name="description" content="Discover your exact expedition archetype and top 3 global destinations through precision cartographic scoring, audited 1:1 points transfers, and cash fare intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>">
+  <!-- Google Identity Services client script for Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- Explorer Tabletop Desk Ambient Underlay (Faint, Non-Overpowering Vignette) -->
+  <div class="tabletop-underlay" id="tabletop-underlay" aria-hidden="true"></div>
+
+  <!-- Top Cartographic Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner container">
+      <div class="brand">
+        <span class="brand-compass">🧭</span>
+        <div class="brand-text">
+          <span class="brand-name">FindYourPassport</span>
+          <span class="brand-tagline">The Cartographer's Compass</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-text btn-header-quiz" id="btn-restart" type="button" style="display: none;" title="Restart Cartographer's Compass">
+          <span class="icon">↺</span> Reset Manifest
+        </button>
+
+        <!-- Quick Access Explainer / About Button -->
+        <button class="btn-header-about" id="btn-header-about" type="button" title="About FindYourPassport · How It Works & Matchmaking Philosophy">
+          <span class="about-icon">🧭</span>
+          <span class="about-label">About</span>
+        </button>
+
+        <!-- Quick Access Saved Expeditions Button -->
+        <button class="btn-header-favorites" id="btn-header-favorites" type="button" title="View Saved Expeditions">
+          <span class="fav-icon">★</span>
+          <span class="fav-label">Saved</span>
+          <span class="fav-count-badge" id="header-fav-count" style="display: none;">0</span>
+        </button>
+
+        <!-- Google Account Top Right Component -->
+        <div class="account-container" id="account-container">
+          <!-- Unauthenticated Sign In Pill Button -->
+          <button class="btn-google-signin" id="btn-google-signin" type="button" title="Sign in with Google">
+            <svg class="google-logo-svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span class="btn-google-text">Sign in</span>
+          </button>
+
+          <!-- Authenticated Circular Profile Avatar Button -->
+          <button class="btn-user-avatar" id="btn-user-avatar" type="button" style="display: none;" title="Google Account Profile" aria-haspopup="true" aria-expanded="false">
+            <img class="user-avatar-img" id="user-avatar-img" src="" alt="Google Profile" style="display: none;">
+            <span class="user-avatar-initials" id="user-avatar-initials">V</span>
+            <span class="avatar-active-ring"></span>
+          </button>
+
+          <!-- Google Account Dropdown Popover -->
+          <div class="account-dropdown-menu card-stock" id="account-dropdown-menu" style="display: none;" role="menu">
+            <div class="dropdown-user-card">
+              <div class="dropdown-avatar-wrap">
+                <img class="dropdown-avatar-img" id="dropdown-avatar-img" src="" alt="Google Profile" style="display: none;">
+                <span class="dropdown-avatar-initials" id="dropdown-avatar-initials">V</span>
+              </div>
+              <div class="dropdown-user-info">
+                <span class="dropdown-user-name" id="dropdown-user-name">Google Traveler</span>
+                <span class="dropdown-user-email" id="dropdown-user-email">traveler@gmail.com</span>
+                <span class="dropdown-auth-badge">
+                  <span class="check-icon">✓</span> Google Account
+                </span>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-menu-list">
+              <button class="dropdown-menu-btn" id="menu-item-favorites" type="button" role="menuitem">
+                <span class="menu-btn-icon">⭐</span>
+                <div class="menu-btn-labels">
+                  <span class="menu-btn-title">My Saved Expeditions</span>
+                  <span class="menu-btn-sub" id="menu-favorites-sub">0 destinations bookmarked</span>
+                </div>
+                <span class="menu-btn-badge" id="menu-favorites-badge">0</span>
+              </button>
+
+              <button class="dropdown-menu-btn" id="menu-item-analytics" type="button" role="menuitem" style="display: none;">
+                <span class="menu-btn-icon">📊</span>
+                <div class="menu-btn-labels">
+                  <span class="menu-btn-title">Admin · Looker Studio Analytics</span>
+                  <span class="menu-btn-sub">Catalog trends & dataset exports</span>
+                </div>
+                <span class="menu-btn-arrow">↗</span>
+              </button>
+
+              <button class="dropdown-menu-btn" id="menu-item-about" type="button" role="menuitem">
+                <span class="menu-btn-icon">🧭</span>
+                <div class="menu-btn-labels">
+                  <span class="menu-btn-title">About & Methodology</span>
+                  <span class="menu-btn-sub">Matchmaking logic & origin corridors</span>
+                </div>
+                <span class="menu-btn-arrow">→</span>
+              </button>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-footer">
+              <button class="btn-account-logout" id="btn-account-logout" type="button">
+                Sign out of Google
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Main Experience Container -->
+  <main class="main-content container">
+
+    <!-- Progress Tracker: 7-Gate Horizon Bar -->
+    <section class="progress-section" id="progress-tracker">
+      <div class="altitude-indicator">
+        <span class="altitude-label">ALTITUDE</span>
+        <span class="altitude-value" id="altitude-display">12,000 FT</span>
+        <span class="altitude-sub" id="gate-status">Gate 1 of 7 · Manifest Entry</span>
+      </div>
+
+      <div class="horizon-bar-container">
+        <div class="horizon-track">
+          <div class="horizon-fill" id="horizon-progress" style="width: 14.28%;"></div>
+          <div class="aircraft-glyph" id="aircraft-glyph" style="left: 14.28%;">
+            <span class="plane-icon" aria-hidden="true">✈</span>
+          </div>
+        </div>
+        <div class="gates-pills" id="gates-pills">
+          <button class="gate-pill active" data-gate="1">1. Crew</button>
+          <button class="gate-pill" data-gate="2">2. Hub</button>
+          <button class="gate-pill" data-gate="3">3. Vibe</button>
+          <button class="gate-pill" data-gate="4">4. Gastronomy</button>
+          <button class="gate-pill" data-gate="5">5. Lodging</button>
+          <button class="gate-pill" data-gate="6">6. Arsenal</button>
+          <button class="gate-pill" data-gate="7">7. Tempo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 7-Gate Manifest Stage -->
+    <section class="manifest-card card-stock" id="manifest-stage">
+      <div class="gate-header">
+        <span class="gate-kicker" id="gate-kicker">GATE 1 OF 7 · TRAVEL PARTY</span>
+        <h1 class="gate-title" id="gate-title">Who shares your compass on this journey?</h1>
+        <p class="gate-subtitle" id="gate-subtitle">Select your travel party to calibrate lodging configurations, table sizes, and itinerary flexibility.</p>
+      </div>
+
+      <!-- Gate 2 Airport Repositioning Pro-Tip Box (conditionally displayed on Gate 2) -->
+      <div class="pro-tip-box" id="gate2-pro-tip" style="display: none;">
+        <div class="pro-tip-badge">✈ PRO TIP</div>
+        <div class="pro-tip-content">
+          <strong>Airport Repositioning Strategy:</strong> Flying out of a secondary market? Shifting your departure to a fortress alliance hub (e.g., booking an inexpensive feeder ticket to JFK, ORD, LHR, or SIN) frequently unlocks 40,000–70,000+ point partner award redemptions on premier long-haul flag carriers.
+        </div>
+      </div>
+
+      <!-- Gate 2 Regional Corridor Guide Header (conditionally displayed on Gate 2) -->
+      <div class="corridor-guide-banner" id="corridor-guide-banner" style="display: none;">
+        <div class="corridor-guide-header">
+          <div class="corridor-step-pill">
+            <span class="step-num">STEP 1</span>
+            <span class="step-label">SELECT FLIGHT CORRIDOR</span>
+          </div>
+          <div class="corridor-guide-badge">
+            <span class="beacon-dot"></span> 5 REGIONS · 23 ALLIANCE HUBS
+          </div>
+        </div>
+        <div class="corridor-guide-sub">
+          Click any of the 5 regional corridors below to explore its primary long-haul fortress hubs:
+        </div>
+      </div>
+
+      <!-- Gate 2 Regional Corridor Switcher (conditionally displayed on Gate 2) -->
+      <div class="corridor-switcher" id="corridor-switcher" style="display: none;" role="tablist" aria-label="Flight Corridors">
+        <button class="corridor-tab corridor-us_east active" data-corridor="us_east" role="tab" aria-selected="true" id="tab-corridor-us_east">
+          <span class="corridor-pulse-dot"></span>
+          <span class="corridor-flag">🇺🇸</span>
+          <div class="corridor-info">
+            <span class="corridor-name">US East</span>
+            <span class="corridor-count">4 Major Hubs</span>
+          </div>
+          <span class="corridor-badge" id="badge-us_east" style="display: none;"></span>
+        </button>
+        <button class="corridor-tab corridor-us_central" data-corridor="us_central" role="tab" aria-selected="false" id="tab-corridor-us_central">
+          <span class="corridor-pulse-dot"></span>
+          <span class="corridor-flag">🇺🇸</span>
+          <div class="corridor-info">
+            <span class="corridor-name">US Central</span>
+            <span class="corridor-count">4 Mega Hubs</span>
+          </div>
+          <span class="corridor-badge" id="badge-us_central" style="display: none;"></span>
+        </button>
+        <button class="corridor-tab corridor-us_west" data-corridor="us_west" role="tab" aria-selected="false" id="tab-corridor-us_west">
+          <span class="corridor-pulse-dot"></span>
+          <span class="corridor-flag">🇺🇸</span>
+          <div class="corridor-info">
+            <span class="corridor-name">US West</span>
+            <span class="corridor-count">3 Rim Hubs</span>
+          </div>
+          <span class="corridor-badge" id="badge-us_west" style="display: none;"></span>
+        </button>
+        <button class="corridor-tab corridor-europe" data-corridor="europe" role="tab" aria-selected="false" id="tab-corridor-europe">
+          <span class="corridor-pulse-dot"></span>
+          <span class="corridor-flag">🇪🇺</span>
+          <div class="corridor-info">
+            <span class="corridor-name">Europe</span>
+            <span class="corridor-count">6 Flagship Hubs</span>
+          </div>
+          <span class="corridor-badge" id="badge-europe" style="display: none;"></span>
+        </button>
+        <button class="corridor-tab corridor-asia_pac" data-corridor="asia_pac" role="tab" aria-selected="false" id="tab-corridor-asia_pac">
+          <span class="corridor-pulse-dot"></span>
+          <span class="corridor-flag">🌏</span>
+          <div class="corridor-info">
+            <span class="corridor-name">Asia & Oceania</span>
+            <span class="corridor-count">6 Oceanic Hubs</span>
+          </div>
+          <span class="corridor-badge" id="badge-asia_pac" style="display: none;"></span>
+        </button>
+      </div>
+
+      <!-- Gate 2 Step 2: Hub Selection Directive Bar (conditionally displayed on Gate 2) -->
+      <div class="hub-stage-callout" id="hub-stage-callout" style="display: none;">
+        <div class="hub-step-chip">STEP 2</div>
+        <div class="hub-stage-text" id="hub-stage-text">
+          Select your departure hub from the <strong>US Eastern Corridor</strong>:
+        </div>
+      </div>
+
+      <!-- Interactive Option Cards Grid -->
+      <div class="options-grid" id="options-grid" role="radiogroup" aria-label="Gate Options">
+        <!-- Injected via JavaScript for the active gate -->
+      </div>
+
+      <!-- Gate Footer Actions -->
+      <div class="gate-footer">
+        <button class="btn btn-secondary" id="btn-prev" disabled>
+          ← Previous Gate
+        </button>
+        <div class="footer-hint" id="footer-hint">Select one to advance</div>
+        <button class="btn btn-primary" id="btn-next">
+          Continue to Gate 2 →
+        </button>
+      </div>
+    </section>
+
+    <!-- The Deliberation Loader Stage -->
+    <section class="deliberation-card card-stock" id="deliberation-stage" style="display: none;">
+      <div class="compass-wrapper">
+        <div class="pulse-ring ring-1"></div>
+        <div class="pulse-ring ring-2"></div>
+        <div class="pulse-ring ring-3"></div>
+        <div class="compass-dial">
+          <div class="cardinal north">N</div>
+          <div class="cardinal east">E</div>
+          <div class="cardinal south">S</div>
+          <div class="cardinal west">W</div>
+          <div class="compass-needle" id="compass-needle"></div>
+          <div class="compass-center"></div>
+        </div>
+      </div>
+      <div class="deliberation-text-container">
+        <span class="deliberation-kicker">ROUTE STRATEGY & PROFILE DELIBERATION</span>
+        <h2 class="deliberation-heading" id="deliberation-heading">Synthesizing your expedition profile...</h2>
+        <p class="deliberation-sub" id="deliberation-sub">Analyzing alliance routing corridors, seasonal microclimates, and 1:1 points sweet spots.</p>
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <button type="button" class="btn btn-secondary" id="btn-skip-deliberation" style="font-size: 0.82rem; padding: 0.5rem 1.1rem; border-color: rgba(10, 27, 57, 0.25);">
+            Reveal Expeditions Now ↗
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Proclamation & Boarding Pass Reveal Stage -->
+    <section class="proclamation-section" id="proclamation-stage" style="display: none;">
+
+      <!-- Ceremonial Proclamation Banner with Map Topography Texture -->
+      <div class="proclamation-header">
+        <!-- Passport Map Topography Background Texture -->
+        <div class="passport-topo-overlay" aria-hidden="true">
+          <svg class="passport-topo-svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="topoContourGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0a1b39" stop-opacity="0.13" />
+                <stop offset="50%" stop-color="#0a1b39" stop-opacity="0.07" />
+                <stop offset="100%" stop-color="#0a1b39" stop-opacity="0.11" />
+              </linearGradient>
+              <linearGradient id="topoAccentGrad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#d97706" stop-opacity="0.25" />
+                <stop offset="100%" stop-color="#059669" stop-opacity="0.2" />
+              </linearGradient>
+              <!-- Passport Security Micro-Grid Pattern -->
+              <pattern id="passportMicroGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M 0,16 L 32,16 M 16,0 L 16,32" fill="none" stroke="#0a1b39" stroke-width="0.5" stroke-opacity="0.04" />
+                <circle cx="16" cy="16" r="1.2" fill="#0a1b39" fill-opacity="0.06" />
+              </pattern>
+            </defs>
+
+            <!-- Security Grid Background -->
+            <rect width="100%" height="100%" fill="url(#passportMicroGrid)" />
+
+            <!-- Undulating Elevation Contour Lines -->
+            <g fill="none" stroke="url(#topoContourGrad)" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M -60,40 C 180,-20 380,160 640,80 C 840,0 1060,120 1260,50" stroke-width="0.9" />
+              <path d="M -60,80 C 180,20 380,200 640,120 C 840,40 1060,160 1260,90" stroke-width="1.5" stroke-dasharray="8,4" />
+              <path d="M -60,120 C 180,60 380,240 640,160 C 840,80 1060,200 1260,130" stroke-width="0.9" />
+              <path d="M -60,160 C 180,100 380,280 640,200 C 840,120 1060,240 1260,170" stroke-width="0.9" />
+              <path d="M -60,200 C 180,140 380,320 640,240 C 840,160 1060,280 1260,210" stroke-width="1.3" />
+              <path d="M -60,240 C 180,180 380,360 640,280 C 840,200 1060,320 1260,250" stroke-width="0.9" />
+              <path d="M -60,280 C 180,220 380,400 640,320 C 840,240 1060,360 1260,290" stroke-width="0.9" />
+              <path d="M -60,320 C 180,260 380,440 640,360 C 840,280 1060,400 1260,330" stroke-width="1.5" stroke-dasharray="8,4" />
+              <path d="M -60,360 C 180,300 380,480 640,400 C 840,320 1060,440 1260,370" stroke-width="0.9" />
+
+              <!-- Left Topographic Island (Behind Stamp) -->
+              <path d="M 90,40 Q 200,10 260,70 Q 330,140 260,210 Q 180,270 90,220 Q 20,170 40,100 Z" stroke-width="0.9" />
+              <path d="M 110,65 Q 190,40 240,85 Q 290,140 240,190 Q 180,240 110,200 Q 50,160 70,110 Z" stroke-width="1.2" />
+              <path d="M 130,90 Q 180,70 220,100 Q 260,140 220,175 Q 175,210 130,180 Q 80,150 100,120 Z" stroke-width="0.9" />
+              <path d="M 150,115 Q 180,100 200,115 Q 220,135 190,155 Q 165,165 140,145 Z" stroke-width="1.6" />
+
+              <!-- Right Topographic Ridge (Behind Verdict) -->
+              <path d="M 830,70 Q 910,30 980,60 Q 1060,90 1030,160 Q 990,230 910,210 Q 820,190 800,130 Z" stroke-width="0.9" />
+              <path d="M 860,85 Q 920,55 970,75 Q 1030,100 1010,155 Q 970,205 915,190 Q 845,175 835,130 Z" stroke-width="1.2" />
+              <path d="M 890,100 Q 930,80 960,95 Q 1000,115 990,150 Q 960,180 920,170 Q 870,160 870,130 Z" stroke-width="0.9" />
+              <path d="M 915,115 Q 940,105 955,115 Q 970,125 960,140 Q 940,150 915,140 Z" stroke-width="1.6" />
+
+              <!-- Micro Secondary Peaks -->
+              <circle cx="520" cy="180" r="42" stroke-width="0.8" />
+              <circle cx="520" cy="180" r="26" stroke-width="1.1" stroke-dasharray="4,2" />
+              <circle cx="520" cy="180" r="12" stroke-width="1.4" />
+            </g>
+
+            <!-- Passport Security Watermark & Cartographic Survey Details -->
+            <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+              <!-- Latitude/Longitude Registration Crosshairs (Elevated and Centered) -->
+              <g transform="translate(600, 20)" text-anchor="middle">
+                <path d="M-115,-3 L-105,-3 M-110,-8 L-110,2" stroke="#d97706" stroke-width="1.2" stroke-opacity="0.5" />
+                <text x="0" y="0" font-size="8.5" fill="#0a1b39" fill-opacity="0.45" letter-spacing="1.4">LAT 43°19'N · LONG 01°59'W</text>
+                <path d="M105,-3 L115,-3 M110,-8 L110,2" stroke="#d97706" stroke-width="1.2" stroke-opacity="0.5" />
+              </g>
+
+              <path d="M345,350 L355,350 M350,345 L350,355" stroke="#059669" stroke-width="1.2" stroke-opacity="0.45" />
+              <text x="360" y="353" font-size="8.5" fill="#0a1b39" fill-opacity="0.38" letter-spacing="1.2">GEODETIC SURVEY CONTOUR · +380M</text>
+
+              <path d="M995,310 L1005,310 M1000,305 L1000,315" stroke="#d97706" stroke-width="1.2" stroke-opacity="0.45" />
+              <text x="1010" y="313" font-size="8.5" fill="#0a1b39" fill-opacity="0.38" letter-spacing="1.2">PASSPORT ROUTE AUDIT · GRID 30T</text>
+
+              <!-- Compass Rose Watermark Accent (Repositioned downward below ceremonial stamp) -->
+              <g class="compass-rose-watermark" transform="translate(165, 338)" stroke="url(#topoAccentGrad)" stroke-width="0.8" opacity="0.26">
+                <circle cx="0" cy="0" r="38" stroke-dasharray="3,3" />
+                <circle cx="0" cy="0" r="22" />
+                <line x1="0" y1="-46" x2="0" y2="46" />
+                <line x1="-46" y1="0" x2="46" y2="0" />
+                <!-- 45-degree diagonal tick lines -->
+                <line x1="-24" y1="-24" x2="24" y2="24" stroke-dasharray="2,2" stroke-width="0.6" stroke-opacity="0.6" />
+                <line x1="-24" y1="24" x2="24" y2="-24" stroke-dasharray="2,2" stroke-width="0.6" stroke-opacity="0.6" />
+                <!-- Directional Points -->
+                <polygon points="0,-36 3,-18 0,-22 -3,-18" fill="#d97706" fill-opacity="0.35" />
+                <polygon points="0,36 3,18 0,22 -3,18" fill="#0a1b39" fill-opacity="0.2" />
+                <polygon points="36,0 18,3 22,0 18,-3" fill="#059669" fill-opacity="0.3" />
+                <polygon points="-36,0 -18,3 -22,0 -18,-3" fill="#0a1b39" fill-opacity="0.2" />
+                <!-- Cardinal Typography -->
+                <text x="0" y="-48" font-size="7" text-anchor="middle" fill="#d97706" fill-opacity="0.75" font-weight="700">N</text>
+                <text x="50" y="2.5" font-size="6.5" text-anchor="start" fill="#059669" fill-opacity="0.65" font-weight="600">E</text>
+                <text x="0" y="55" font-size="6.5" text-anchor="middle" fill="#0a1b39" fill-opacity="0.55" font-weight="600">S</text>
+                <text x="-50" y="2.5" font-size="6.5" text-anchor="end" fill="#0a1b39" fill-opacity="0.55" font-weight="600">W</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="ceremonial-stamp" id="ceremonial-stamp">
+          <div class="stamp-inner">
+            <span class="stamp-sub">CONSULAR DISCOVERY STAMP • VALID FOR PASSAGE</span>
+            <span class="stamp-main" id="stamp-archetype">MATCH: THE EPICUREAN STRATEGIST</span>
+            <span class="stamp-code" id="stamp-code">CERTIFIED · 2026 ROUTE AUDIT</span>
+          </div>
+        </div>
+
+        <div class="archetype-proclamation">
+          <span class="proclamation-kicker">CURATED EXPEDITION VERDICT</span>
+          <h2 class="archetype-title" id="revealed-archetype-title">The Epicurean Strategist</h2>
+          <p class="archetype-subtitle" id="revealed-archetype-subtitle">Pursuer of terroir, regional craft, and unhurried dining rituals</p>
+          <blockquote class="oracle-verdict" id="oracle-verdict">
+            "Your itinerary is measured by terroir and table conversation rather than flight segments logged. You prioritize regional gastronomy, unhurried dining rituals, and boutique sanctuaries that favor genuine culinary craft over sterile luxury."
+          </blockquote>
+        </div>
+      </div>
+
+      <!-- Match Carousel Navigation Tabs -->
+      <div class="carousel-nav" id="carousel-nav" role="tablist">
+        <button class="carousel-tab active" data-match="0" role="tab" aria-selected="true" id="tab-0">
+          <div class="tab-kicker-row">
+            <span class="tab-rank">★ MATCH #1</span>
+            <span class="tab-heart-pill" id="tab-0-heart" title="Saved to Passport">♡</span>
+          </div>
+          <span class="tab-dest-name" id="tab-0-name">San Sebastián</span>
+        </button>
+        <button class="carousel-tab" data-match="1" role="tab" aria-selected="false" id="tab-1">
+          <div class="tab-kicker-row">
+            <span class="tab-rank">RUNNER-UP #2</span>
+            <span class="tab-heart-pill" id="tab-1-heart" title="Saved to Passport">♡</span>
+          </div>
+          <span class="tab-dest-name" id="tab-1-name">Oaxaca Valley</span>
+        </button>
+        <button class="carousel-tab" data-match="2" role="tab" aria-selected="false" id="tab-2">
+          <div class="tab-kicker-row">
+            <span class="tab-rank">ALTERNATIVE #3</span>
+            <span class="tab-heart-pill" id="tab-2-heart" title="Saved to Passport">♡</span>
+          </div>
+          <span class="tab-dest-name" id="tab-2-name">Kyoto</span>
+        </button>
+      </div>
+
+      <!-- The Boarding Pass Card -->
+      <article class="boarding-pass card-stock" id="boarding-pass">
+        <!-- Top Boarding Pass Header -->
+        <div class="pass-header">
+          <div class="pass-airline">
+            <span class="pass-globe">🌐</span>
+            <span class="pass-carrier-text">EXPEDITION BOARDING PASS</span>
+          </div>
+          <div class="pass-header-actions">
+            <div class="pass-match-badge" id="pass-match-badge">#1 PRIMARY EXPEDITION MATCH</div>
+            <button class="btn-favorite-heart" id="btn-favorite-match" type="button" aria-label="Save this destination to favorites" title="Save this destination to your Google Passport">
+              <span class="heart-icon" id="heart-icon-pass">♡</span>
+              <span class="heart-text" id="heart-text-pass">Save Destination</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pass-coupon-container">
+          <div class="pass-body">
+            <div class="pass-route-row">
+              <div class="route-origin">
+                <span class="route-code" id="pass-origin-code">JFK</span>
+                <span class="route-city" id="pass-origin-city">New York, USA</span>
+              </div>
+              <div class="route-flight-path">
+                <span class="path-alliance" id="pass-alliance-tag">Oneworld Direct</span>
+                <div class="path-line">
+                  <span class="path-dot start"></span>
+                  <span class="path-plane">✈</span>
+                  <span class="path-dot end"></span>
+                </div>
+                <span class="path-duration" id="pass-routing-summary">Direct / 1-Stop Transit</span>
+              </div>
+              <div class="route-dest">
+                <span class="route-code" id="pass-dest-code">BIO</span>
+                <span class="route-city" id="pass-dest-city">San Sebastián, Spain</span>
+              </div>
+            </div>
+
+            <!-- 3 Glanceable Metric Pills -->
+            <div class="metric-pills-row">
+              <div class="metric-pill">
+                <span class="metric-icon">🗓</span>
+                <div class="metric-info">
+                  <span class="metric-label">BEST WINDOW</span>
+                  <span class="metric-val" id="pill-window">May – Jun & Sep – Oct</span>
+                </div>
+              </div>
+              <div class="metric-pill">
+                <span class="metric-icon">💰</span>
+                <div class="metric-info">
+                  <span class="metric-label">BUDGET VIBE</span>
+                  <span class="metric-val" id="pill-budget">High Culinary Value</span>
+                </div>
+              </div>
+              <div class="metric-pill">
+                <span class="metric-icon">✈</span>
+                <div class="metric-info">
+                  <span class="metric-label">PRIMARY ROUTE</span>
+                  <span class="metric-val" id="pill-route">Oneworld / Partner Avios Sweet Spot</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Match Narrative -->
+            <div class="pass-narrative-box">
+              <h3 class="narrative-heading">Why This Matches Your Travel Profile:</h3>
+              <p class="narrative-text" id="pass-match-reason">
+                The world's highest density of culinary artistry per square meter, framed by the crescent sands of La Concha and dramatic Cantabrian bluffs.
+              </p>
+            </div>
+
+            <!-- Dual Strategy Cards -->
+            <div class="strategy-cards-grid">
+              <div class="strategy-card stay-style-card">
+                <div class="strategy-card-header">
+                  <span class="strategy-icon">🏡</span>
+                  <h4 class="strategy-title">Lodging Architecture</h4>
+                </div>
+                <p class="strategy-text" id="strategy-stay-style">
+                  Belle Époque cliffside villa or a restored 19th-century Basque manor overlooking the ocean.
+                </p>
+                <div class="field-marginalia">
+                  <span class="marginalia-tag">※ Field Marginalia:</span>
+                  <span class="marginalia-script">Audited for architectural heritage, boutique sanctuary quietude &amp; unhurried nocturnal repose.</span>
+                </div>
+              </div>
+
+              <div class="strategy-card flight-hack-card">
+                <div class="strategy-card-header">
+                  <span class="strategy-icon">✈</span>
+                  <h4 class="strategy-title">Route & Award Strategy</h4>
+                </div>
+                <p class="strategy-text" id="strategy-flight-secret">
+                  Repositioning from JFK: Target long-haul routes into Bilbao (BIO) or San Sebastián (EAS) via Madrid on Iberia, leveraging partner sweet spots typically priced at 34,000–42,000 Avios off-peak in Business Class (or ~17,000 Avios in Economy) transferred 1:1 from Amex, Chase, or Bilt with minimal carrier surcharges.
+                </p>
+                <div class="field-marginalia">
+                  <span class="marginalia-tag">※ Field Marginalia:</span>
+                  <span class="marginalia-script">Audited for 1:1 transferable point partners, alliance award charts &amp; zero junk fees.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual-Section Perforated Ticket Stub (#f5f8fc) -->
+          <div class="pass-stub">
+            <div class="perforation-line" aria-hidden="true">
+              <span class="notch notch-top"></span>
+              <span class="notch notch-bottom"></span>
+            </div>
+            <div class="stub-content">
+              <div class="stub-header">
+                <div class="stub-header-top">
+                  <span class="stub-kicker">PASSENGER TICKET STUB</span>
+                  <span class="punched-serial-code stub-serial">20#90003</span>
+                </div>
+                <span class="stub-flight-code" id="stub-route-code">JFK ➔ BIO</span>
+              </div>
+              <div class="stub-meta-grid">
+                <div class="stub-meta-cell">
+                  <span class="stub-lbl">PASSENGER</span>
+                  <span class="stub-val" id="stub-passenger-title">EXPEDITION GUEST</span>
+                </div>
+                <div class="stub-meta-cell">
+                  <span class="stub-lbl">CLASS</span>
+                  <span class="stub-val">FIRST / AWARD</span>
+                </div>
+                <div class="stub-meta-cell">
+                  <span class="stub-lbl">GATE</span>
+                  <span class="stub-val">07 · TEMPO</span>
+                </div>
+                <div class="stub-meta-cell">
+                  <span class="stub-lbl">STATUS</span>
+                  <span class="stub-val status-confirmed">CONFIRMED ✓</span>
+                </div>
+              </div>
+
+              <!-- Authentic Dynamic Consular Passport Entry Seal (Programmatic SVG Template) -->
+              <div class="passport-stamp-wrapper" id="passport-stamp-container" aria-label="Official Destination Consular Entry Stamp">
+                <!-- Programmatically generated in app.js via SVG template and hydrated with destination, IATA code, and archetype -->
+              </div>
+
+              <div class="stub-barcode" aria-hidden="true">
+                <span class="bar"></span><span class="bar thick"></span><span class="bar"></span><span class="bar thick"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar thick"></span><span class="bar"></span>
+                <span class="bar thick"></span><span class="bar"></span><span class="bar thick"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar thick"></span><span class="bar"></span>
+              </div>
+              <div class="stub-actions">
+                <button class="btn btn-primary btn-dossier" id="btn-open-dossier">
+                  View Full Expedition Dossier ↗
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Recalibrate Expedition Action (Bottom of View) -->
+      <div class="recalibrate-action-container">
+        <button class="btn-recalibrate" id="btn-start-quiz" type="button" title="Recalibrate Your Expedition with the 7-Gate Quiz">
+          <span class="recalibrate-icon">🧭</span> Recalibrate Your Expedition →
+        </button>
+        <span class="recalibrate-hint">Personalize routes based on your crew, departure hub, points currencies & travel vibe.</span>
+      </div>
+    </section>
+
+    <!-- The Expedition Dossier (Dedicated View - Controlled via Button) -->
+    <section class="dossier-section card-stock" id="dossier-stage" style="display: none;">
+      <div class="dossier-header">
+        <div class="dossier-title-group">
+          <div class="dossier-kicker-row">
+            <button class="btn btn-primary btn-back-pass" id="btn-back-to-boarding-pass" type="button" title="Return to Boarding Pass and 3-Option Carousel">
+              ← Back to Boarding Pass
+            </button>
+            <span class="dossier-kicker">CURATED EXPEDITION DOSSIER</span>
+          </div>
+          <h2 class="dossier-title" id="dossier-dest-title">San Sebastián & Basque Coast</h2>
+          <p class="dossier-country" id="dossier-country-title">Spain · Cantabrian Coastline</p>
+        </div>
+        <div class="dossier-header-actions">
+          <button class="btn-favorite-heart btn-favorite-dossier" id="btn-favorite-dossier" type="button" aria-label="Save this destination to favorites" title="Save to Passport">
+            <span class="heart-icon" id="heart-icon-dossier">♡</span>
+            <span class="heart-text" id="heart-text-dossier">Save Destination</span>
+          </button>
+          <div class="dossier-stamp">
+            <span>CURATED PROFILE</span>
+          </div>
+        </div>
+      </div>
+
+        <div class="dossier-overview-row">
+          <div class="dossier-overview-col">
+            <h3 class="section-heading">Overview & Terroir</h3>
+            <p class="dossier-text" id="dossier-overview-text">
+              San Sebastián is the culinary crucible of Europe. Pintxos crawls in the Parte Vieja surrender to three-star Michelin shrines, with surfing at Zurriola beach just minutes away.
+            </p>
+
+            <h3 class="section-heading" style="margin-top: 24px;">Seasonal Intelligence & Climate</h3>
+            <p class="dossier-text" id="dossier-season-text">
+              <strong class="dossier-window-highlight">Best Window: May – October.</strong> Early autumn and late spring offer the perfect sweet spot: sea temperatures remain warm from summer, pintxos bars are unhurried, and grape harvesting begins in the Txakoli vineyards.
+            </p>
+          </div>
+
+          <!-- Cost Breakdown Card -->
+          <div class="cost-breakdown-card">
+            <h3 class="cost-card-heading">Audited Cost Breakdown</h3>
+            <ul class="cost-list">
+              <li>
+                <span class="cost-icon">🏨</span>
+                <div class="cost-meta">
+                  <span class="cost-label">LODGING</span>
+                  <span class="cost-val" id="cost-lodging">$220 – $410 / night</span>
+                </div>
+              </li>
+              <li>
+                <span class="cost-icon">🍽️</span>
+                <div class="cost-meta">
+                  <span class="cost-label">DINING</span>
+                  <span class="cost-val" id="cost-dining">$45 / day (Pintxos) – $180+ (Fine Dining)</span>
+                </div>
+              </li>
+              <li>
+                <span class="cost-icon">🚆</span>
+                <div class="cost-meta">
+                  <span class="cost-label">TRANSIT</span>
+                  <span class="cost-val" id="cost-transit">$18 / day (Euskotren & Coastal Walks)</span>
+                </div>
+              </li>
+              <li>
+                <span class="cost-icon">💳</span>
+                <div class="cost-meta">
+                  <span class="cost-label">POINTS ARSENAL</span>
+                  <span class="cost-val" id="cost-points">2.4¢–3.1¢ / pt via Avios & Hyatt</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4 Signature Highlights Grid -->
+        <div class="highlights-section">
+          <h3 class="section-heading">Signature Highlights & Experiences</h3>
+          <div class="highlights-grid" id="highlights-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Geographic Topography & Embedded Google Maps Interface -->
+        <div class="destination-map-section" id="destination-map-section">
+          <div class="map-card-header">
+            <div class="map-header-text">
+              <span class="map-kicker">GEOGRAPHIC SURVEY & TOPOGRAPHY</span>
+              <h3 class="map-title" id="map-destination-name">Destination Topography</h3>
+              <p class="map-subtitle" id="map-destination-tagline">Satellite topography and spatial orientation for expedition planning.</p>
+            </div>
+            <div class="map-header-actions">
+              <span class="map-coords-badge" id="map-coords-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                <span id="map-coords-text">Loading coordinates...</span>
+              </span>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-map-external" id="btn-open-google-maps">
+                Open in Google Maps ↗
+              </a>
+            </div>
+          </div>
+          <div class="map-frame-wrapper">
+            <iframe
+              id="destination-map-iframe"
+              class="destination-map-iframe"
+              title="Interactive Google Map for destination"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="about:blank">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Interactive 6-Month Cash Fare Projection SVG Chart -->
+        <div class="fare-chart-section">
+          <div class="fare-chart-header">
+            <div>
+              <span class="chart-kicker">AIRFARE INTELLIGENCE</span>
+              <h3 class="chart-title">Interactive 6-Month Cash Fare Projection</h3>
+              <p class="chart-subtitle">Real-time benchmark fares across upcoming months with audited alliance repositioning.</p>
+            </div>
+
+            <!-- Hub Selector Pills (Populated Dynamically Based on Selected Origin) -->
+            <div class="hub-selector-container">
+              <span class="hub-label">DEPARTURE HUB:</span>
+              <div class="hub-pills" id="hub-pills">
+                <!-- Dynamically rendered via app.js -->
+              </div>
+              <!-- Expandable More Hubs Drawer -->
+              <div class="more-hubs-drawer" id="more-hubs-drawer" style="display: none;">
+                <!-- Dynamically rendered via app.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic SVG Chart Container -->
+          <div class="svg-chart-wrapper" id="svg-chart-wrapper">
+            <!-- SVG rendered via JavaScript -->
+          </div>
+
+          <!-- Google Flights Dynamic Deep Link CTA -->
+          <div class="fare-action-bar">
+            <div class="fare-deal-summary" id="fare-deal-summary">
+              Lowest projected fare: <strong id="summary-low-price">$420</strong> in <span id="summary-low-month">September</span> from <span id="summary-active-hub">JFK</span>.
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-launch-flights" id="btn-launch-flights">
+              ✈ Launch Google Flights from JFK ↗
+            </a>
+          </div>
+        <!-- Dossier Bottom Bar -->
+        <div class="dossier-bottom-bar" id="dossier-bottom-bar">
+          <button class="btn btn-primary btn-back-pass" id="btn-back-to-boarding-pass-bottom" type="button">
+            ← Back to Boarding Pass & Options Carousel
+          </button>
+        </div>
+
+      </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p><strong>FindYourPassport</strong> · Precision Cartographic Travel Discovery & Points Intelligence</p>
+        <p class="copyright">Audited for Oneworld, Star Alliance, and SkyTeam 1:1 transfer rules. No sponsored placements.</p>
+      </div>
+      <div class="footer-right">
+        <span class="oracle-status">● Routing Intelligence Transit Active (RITA)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Toast Notification System -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Login Reminder Modal Dialog (For unauthenticated users attempting to favorite) -->
+  <div class="login-prompt-backdrop" id="login-prompt-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="login-prompt-title">
+    <div class="login-prompt-modal card-stock">
+      <div class="login-modal-header">
+        <div class="google-brand-badge">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Google Identity</span>
+        </div>
+        <button class="modal-close" id="btn-close-login-prompt" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="login-modal-body">
+        <span class="modal-kicker">PERSONAL EXPEDITION PASSPORT</span>
+        <h3 class="login-modal-title" id="login-prompt-title">Sign In to Save Your Expeditions</h3>
+        <p class="login-modal-subtitle">
+          Save curated destinations, bookmark audited points sweet spots, and return to your expedition archive anytime.
+        </p>
+
+        <!-- Dynamic Destination Preview Pill -->
+        <div class="login-dest-preview" id="login-dest-preview">
+          <span class="dest-preview-heart">♥</span>
+          <div class="dest-preview-text">
+            <span class="dest-preview-name" id="preview-dest-name">San Sebastián & Basque Coast</span>
+            <span class="dest-preview-sub" id="preview-dest-sub">Save this dossier to your Google Account</span>
+          </div>
+        </div>
+
+        <div class="login-benefits-list">
+          <div class="benefit-item">
+            <span class="benefit-check">✓</span>
+            <span>Bookmark unlimited destination dossiers with points & cash strategies</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-check">✓</span>
+            <span>Access your saved expeditions from any device via Google Sign-In</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-check">✓</span>
+            <span>Zero password friction — seamless, secure Google Account sign-in</span>
+          </div>
+        </div>
+
+        <!-- Google GSI One-Tap Container (if Google Client ID active) -->
+        <div id="gsi-button-slot" class="gsi-button-slot"></div>
+
+        <!-- One-Click Instant Google Demo Login & Custom Testing -->
+        <div class="login-options-group">
+          <button class="btn btn-google-instant" id="btn-instant-google-login" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            Sign in with Google Account (Instant Demo)
+          </button>
+
+          <div class="custom-login-toggle-wrap">
+            <button class="btn-text-subtle" id="btn-toggle-custom-login" type="button">
+              Or test with custom profile name / email ▾
+            </button>
+            <div class="custom-login-fields" id="custom-login-fields" style="display: none;">
+              <input type="text" id="input-custom-name" class="input-text-sm" placeholder="Your Name (e.g. Victor)">
+              <input type="email" id="input-custom-email" class="input-text-sm" placeholder="Your Email (e.g. victor@example.com)">
+              <button class="btn btn-secondary btn-sm" id="btn-submit-custom-login" type="button">
+                Sign In With Profile
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-modal-footer">
+        <button class="btn-dismiss-text" id="btn-dismiss-login-prompt" type="button">
+          Continue as Guest (Explore without Saving)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Expeditions Slide-Over Drawer -->
+  <div class="favorites-drawer-backdrop" id="favorites-drawer-backdrop" style="display: none;">
+    <aside class="favorites-drawer" id="favorites-drawer" aria-labelledby="drawer-title" role="dialog" aria-modal="true">
+      <!-- Drawer Topography Background Texture -->
+      <div class="drawer-topo-overlay" aria-hidden="true">
+        <svg class="drawer-topo-svg" viewBox="0 0 500 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="drawerTopoContourGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0a1b39" stop-opacity="0.10" />
+              <stop offset="50%" stop-color="#0a1b39" stop-opacity="0.05" />
+              <stop offset="100%" stop-color="#0a1b39" stop-opacity="0.09" />
+            </linearGradient>
+            <pattern id="drawerMicroGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path d="M 0,14 L 28,14 M 14,0 L 14,28" fill="none" stroke="#0a1b39" stroke-width="0.5" stroke-opacity="0.04" />
+              <circle cx="14" cy="14" r="1.1" fill="#0a1b39" fill-opacity="0.06" />
+            </pattern>
+          </defs>
+
+          <!-- Security Grid -->
+          <rect width="100%" height="100%" fill="url(#drawerMicroGrid)" />
+
+          <!-- Topographic Elevation Contours -->
+          <g fill="none" stroke="url(#drawerTopoContourGrad)" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M -40,50 C 100,0 240,110 380,40 C 440,10 500,70 540,30" stroke-width="0.9" />
+            <path d="M -40,110 C 100,60 240,170 380,100 C 440,70 500,130 540,90" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,170 C 100,120 240,230 380,160 C 440,130 500,190 540,150" stroke-width="0.9" />
+            <path d="M -40,230 C 100,180 240,290 380,220 C 440,190 500,250 540,210" stroke-width="0.9" />
+            <path d="M -40,290 C 100,240 240,350 380,280 C 440,250 500,310 540,270" stroke-width="1.2" />
+            <path d="M -40,350 C 100,300 240,410 380,340 C 440,310 500,370 540,330" stroke-width="0.9" />
+            <path d="M -40,410 C 100,360 240,470 380,400 C 440,370 500,430 540,390" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,470 C 100,420 240,530 380,460 C 440,430 500,490 540,450" stroke-width="0.9" />
+            <path d="M -40,530 C 100,480 240,590 380,520 C 440,490 500,550 540,510" stroke-width="0.9" />
+            <path d="M -40,590 C 100,540 240,650 380,580 C 440,550 500,610 540,570" stroke-width="1.2" />
+            <path d="M -40,650 C 100,600 240,710 380,640 C 440,610 500,670 540,630" stroke-width="0.9" />
+            <path d="M -40,710 C 100,660 240,770 380,700 C 440,670 500,730 540,690" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,770 C 100,720 240,830 380,760 C 440,730 500,790 540,750" stroke-width="0.9" />
+            <path d="M -40,830 C 100,780 240,890 380,820 C 440,790 500,850 540,810" stroke-width="0.9" />
+            <path d="M -40,890 C 100,840 240,950 380,880 C 440,850 500,910 540,870" stroke-width="1.2" />
+            <path d="M -40,950 C 100,900 240,1010 380,940 C 440,910 500,970 540,930" stroke-width="0.9" />
+          </g>
+
+          <!-- Topographic Geodetic Accents -->
+          <g font-family="ui-monospace, monospace" font-size="8" fill="#0a1b39" fill-opacity="0.32" letter-spacing="1.2">
+            <text x="24" y="32">PASSPORT STAMP ARCHIVE · SURVEY CONTOUR</text>
+            <text x="24" y="980">CARTOGRAPHIC REGISTRY · GRID 30T</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="drawer-header">
+        <div class="drawer-title-wrap">
+          <span class="drawer-kicker">My Passport Stamps</span>
+          <div class="drawer-title-row">
+            <h2 class="drawer-title" id="drawer-title">Saved Expeditions</h2>
+            <span class="drawer-count-badge" id="drawer-fav-count">0</span>
+          </div>
+        </div>
+        <button class="drawer-close" id="btn-close-favorites-drawer" aria-label="Close saved expeditions">✕</button>
+      </div>
+
+      <div class="drawer-user-status" id="drawer-user-status">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="drawer-body" id="favorites-drawer-body">
+        <!-- Empty State -->
+        <div class="favorites-empty" id="favorites-empty" style="display: none;">
+          <div class="empty-compass-icon">🧭</div>
+          <h3 class="empty-title">Your Passport is Empty</h3>
+          <p class="empty-desc">
+            Consult the 7-Gate Compass and tap the <strong>♡ Save Destination</strong> heart icon on any match or dossier to bookmark it in your personal Google archive.
+          </p>
+          <button class="btn btn-secondary btn-sm" id="btn-empty-start-quiz" type="button">
+            Begin 7-Gate Compass →
+          </button>
+        </div>
+
+        <!-- List of Saved Destinations -->
+        <div class="favorites-list" id="favorites-list">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-primary btn-sm" id="btn-drawer-done" type="button" style="width: 100%;">
+          Done
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- About & Cartographer Explainer Slide-Over Drawer -->
+  <div class="about-drawer-backdrop" id="about-drawer-backdrop" style="display: none;">
+    <aside class="about-drawer" id="about-drawer" aria-labelledby="about-drawer-title" role="dialog" aria-modal="true">
+      <!-- Drawer Topography Background Texture -->
+      <div class="drawer-topo-overlay" aria-hidden="true">
+        <svg class="drawer-topo-svg" viewBox="0 0 500 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aboutTopoContourGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0a1b39" stop-opacity="0.10" />
+              <stop offset="50%" stop-color="#0a1b39" stop-opacity="0.05" />
+              <stop offset="100%" stop-color="#0a1b39" stop-opacity="0.09" />
+            </linearGradient>
+            <pattern id="aboutMicroGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path d="M 0,14 L 28,14 M 14,0 L 14,28" fill="none" stroke="#0a1b39" stroke-width="0.5" stroke-opacity="0.04" />
+              <circle cx="14" cy="14" r="1.1" fill="#0a1b39" fill-opacity="0.06" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#aboutMicroGrid)" />
+          <g fill="none" stroke="url(#aboutTopoContourGrad)" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M -40,50 C 100,0 240,110 380,40 C 440,10 500,70 540,30" stroke-width="0.9" />
+            <path d="M -40,120 C 100,70 240,180 380,110 C 440,80 500,140 540,100" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,190 C 100,140 240,250 380,180 C 440,150 500,210 540,170" stroke-width="0.9" />
+            <path d="M -40,260 C 100,210 240,320 380,250 C 440,220 500,280 540,240" stroke-width="0.9" />
+            <path d="M -40,330 C 100,280 240,390 380,320 C 440,290 500,350 540,310" stroke-width="1.2" />
+            <path d="M -40,400 C 100,350 240,460 380,390 C 440,360 500,420 540,380" stroke-width="0.9" />
+            <path d="M -40,470 C 100,420 240,530 380,460 C 440,430 500,490 540,450" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,540 C 100,490 240,600 380,530 C 440,500 500,560 540,520" stroke-width="0.9" />
+            <path d="M -40,610 C 100,560 240,670 380,600 C 440,570 500,630 540,590" stroke-width="1.2" />
+            <path d="M -40,680 C 100,630 240,740 380,670 C 440,640 500,700 540,660" stroke-width="0.9" />
+            <path d="M -40,750 C 100,700 240,810 380,740 C 440,710 500,770 540,730" stroke-width="1.3" stroke-dasharray="6,4" />
+            <path d="M -40,820 C 100,770 240,880 380,810 C 440,780 500,840 540,800" stroke-width="0.9" />
+            <path d="M -40,890 C 100,840 240,950 380,880 C 440,850 500,910 540,870" stroke-width="1.2" />
+          </g>
+          <g font-family="ui-monospace, monospace" font-size="8" fill="#0a1b39" fill-opacity="0.32" letter-spacing="1.2">
+            <text x="24" y="32">CARTOGRAPHIC METHODOLOGY · SURVEY 2026</text>
+            <text x="24" y="980">EXPLORATION DOSSIER · ALLIANCE AUDIT</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="drawer-header">
+        <div class="drawer-title-wrap">
+          <span class="drawer-kicker">CARTOGRAPHIC PHILOSOPHY & METHODOLOGY</span>
+          <div class="drawer-title-row">
+            <h2 class="drawer-title" id="about-drawer-title">About FindYourPassport</h2>
+          </div>
+        </div>
+        <button class="drawer-close" id="btn-close-about-drawer" aria-label="Close explainer">✕</button>
+      </div>
+
+      <div class="drawer-body about-drawer-body">
+        
+        <!-- Accordion Controls Bar -->
+        <div class="about-controls-bar">
+          <span class="about-controls-hint">5 Strategic Foundations</span>
+          <button class="btn-toggle-all-cards" id="btn-toggle-all-cards" type="button" aria-expanded="true">
+            <span class="toggle-icon">⊟</span> Collapse All
+          </button>
+        </div>
+
+        <!-- Card 1: Core Problem & Strategic Matchmaking -->
+        <div class="about-card card-stock is-expanded" id="about-card-1">
+          <button class="about-card-header" type="button" aria-expanded="true" aria-controls="about-card-1-content">
+            <div class="about-card-title-group">
+              <span class="about-icon-pill">🧠</span>
+              <div class="about-header-text">
+                <span class="about-card-badge">THE PROBLEM WE SOLVE</span>
+                <h3 class="about-card-title">Eliminating Vacation Paralysis by Analysis</h3>
+              </div>
+            </div>
+            <span class="about-accordion-icon">▼</span>
+          </button>
+          <div class="about-card-content" id="about-card-1-content">
+            <p class="about-hero-text">
+              Modern vacation planning has devolved into <strong>cognitive exhaustion</strong>. Between dozens of open browser tabs, algorithmic social media hype, contradictory forum debates, and opaque frequent flyer charts, travelers spend 40+ hours researching only to freeze up from decision fatigue or default to the same congested tourist traps.
+            </p>
+            <p class="about-hero-text">
+              <strong>FindYourPassport</strong> replaces speculative guesswork with <em>strategic matchmaking</em>. The 7-Gate Cartographer's Compass evaluates your travel archetype, seasonal climate tolerance, lodging sanctuary philosophy, and funding model to deliver high-conviction recommendations with actionable flight routes.
+            </p>
+            <div class="about-stats-row">
+              <div class="about-stat-item">
+                <span class="about-stat-num">Global</span>
+                <span class="about-stat-label">Curated Destinations Archive</span>
+              </div>
+              <div class="about-stat-item">
+                <span class="about-stat-num">7</span>
+                <span class="about-stat-label">Precision Decision Gates</span>
+              </div>
+              <div class="about-stat-item">
+                <span class="about-stat-num">3</span>
+                <span class="about-stat-label">Major Airline Alliances</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: World-Class Icons & Undiscovered Horizons -->
+        <div class="about-card card-stock is-expanded" id="about-card-2">
+          <button class="about-card-header" type="button" aria-expanded="true" aria-controls="about-card-2-content">
+            <div class="about-card-title-group">
+              <span class="about-icon-pill">🌍</span>
+              <div class="about-header-text">
+                <span class="about-card-badge">CURATED HORIZONS</span>
+                <h3 class="about-card-title">World-Class Icons & Undiscovered Corners</h3>
+              </div>
+            </div>
+            <span class="about-accordion-icon">▼</span>
+          </button>
+          <div class="about-card-content" id="about-card-2-content">
+            <p class="about-section-p">
+              Iconic global destinations—from the architectural wonders of Tokyo and Rome to the romantic canals of Venice and the energy of Paris—have earned their worldwide renown for good reason. They are extraordinary milestones that every traveler deserves to experience.
+            </p>
+            <p class="about-section-p">
+              At the same time, our world is vast, and many of the most profound journeys unfold in regions that may not be top-of-mind. FindYourPassport is built to celebrate both: pairing beloved bucket-list capitals with under-the-radar cultural and natural havens.
+            </p>
+            <p class="about-section-p">
+              Whether you are drawn to celebrated global cities or seeking tranquil alternatives—such as the emerald volcanic calderas of <strong>São Miguel (Azores)</strong>, the cedar-scented mountain shrines of <strong>Kumano Kodo</strong>, the dramatic arctic sea-cliffs of <strong>Lofoten</strong>, or the high-altitude Andean vineyards of <strong>Mendoza</strong>—our evolving worldwide catalog guides you to extraordinary corners of our world and shows you precisely how to reach them.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3: Dynamic Routing & Origin Hubs -->
+        <div class="about-card card-stock highlight-corridor is-expanded" id="about-card-3">
+          <button class="about-card-header" type="button" aria-expanded="true" aria-controls="about-card-3-content">
+            <div class="about-card-title-group">
+              <span class="about-icon-pill">✈️</span>
+              <div class="about-header-text">
+                <span class="about-card-badge">ORIGIN INTELLIGENCE</span>
+                <h3 class="about-card-title">Dynamic Routing: Why Gate 2 Changes Everything</h3>
+              </div>
+            </div>
+            <span class="about-accordion-icon">▼</span>
+          </button>
+          <div class="about-card-content" id="about-card-3-content">
+            <p class="about-section-p">
+              Recommendations in FindYourPassport are <strong>not static lists</strong>. Different destinations, alliance rankings, and flight connections surface dynamically based on the <em>departure corridor and home hub you select in Gate 2</em>:
+            </p>
+            <div class="about-corridor-breakdown">
+              <div class="corridor-note-item">
+                <strong>🇺🇸 US West (SEA, SFO, LAX):</strong>
+                <span>Optimizes transpacific gateways (Tokyo, Seoul, Taipei, Sydney, Auckland) and non-stop northern polar routes to Europe.</span>
+              </div>
+              <div class="corridor-note-item">
+                <strong>🇺🇸 US Central (ORD, DFW, DEN, MSP):</strong>
+                <span>Balances Star Alliance and OneWorld fortress hubs with non-stop range into Latin America, Europe, and Asia.</span>
+              </div>
+              <div class="corridor-note-item">
+                <strong>🇺🇸 US East (JFK, BOS, MIA, ATL):</strong>
+                <span>Powers high-frequency transatlantic sprints, Caribbean hops, and direct Middle Eastern connectivity.</span>
+              </div>
+              <div class="corridor-note-item">
+                <strong>🇪🇺 Europe (LHR, CDG, FRA, AMS, MUC):</strong>
+                <span>Unlocks direct, single-hop gateways to North Africa, Central Asia, and Mediterranean sanctuaries without grueling 20-hour transits.</span>
+              </div>
+              <div class="corridor-note-item">
+                <strong>🌏 Asia & Oceania (HND/NRT, ICN, SIN, HKG, SYD, MEL):</strong>
+                <span>Surfaces exquisite Southeast Asian cultural retreats, Himalayan valleys, and South Pacific archipelagos.</span>
+              </div>
+            </div>
+            <p class="about-tip-callout">
+              💡 <em>Pro-Tip: When planning your next voyage, try changing your departure hub in Gate 2 to witness how alliance feasibility and top-ranked matches transform.</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 4: Audited Flight & Award Intelligence -->
+        <div class="about-card card-stock is-expanded" id="about-card-4">
+          <button class="about-card-header" type="button" aria-expanded="true" aria-controls="about-card-4-content">
+            <div class="about-card-title-group">
+              <span class="about-icon-pill">🎟️</span>
+              <div class="about-header-text">
+                <span class="about-card-badge">AWARD & AIRFARE ARBITRAGE</span>
+                <h3 class="about-card-title">How to Get There: Audited Flight Strategies</h3>
+              </div>
+            </div>
+            <span class="about-accordion-icon">▼</span>
+          </button>
+          <div class="about-card-content" id="about-card-4-content">
+            <p class="about-section-p">
+              An inspiring destination is meaningless without a concrete, realistic blueprint for getting there. Each destination dossier reveals:
+            </p>
+            <ul class="about-feature-list">
+              <li><strong>Alliance Topology:</strong> Precise carrier recommendations across <strong>OneWorld, Star Alliance, and SkyTeam</strong>.</li>
+              <li><strong>1:1 Transferable Points Arbitrage:</strong> Step-by-step transfer sweet spots across <strong>Amex Membership Rewards, Chase Ultimate Rewards, Capital One, Citi ThankYou, Bilt, and Rove Miles</strong> (including Bilt 1:1 access to JetBlue TrueBlue & Alaska Airlines, and exclusive access to Lufthansa Miles & More and SAS EuroBonus).</li>
+              <li><strong>Cash Fare Intelligence:</strong> Low-deal targets, mistake-fare alerts, and seasonal price benchmarks.</li>
+              <li><strong>Embedded Topographic Maps:</strong> Exact GPS coordinates and interactive Google Maps integration for spatial orientation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 5: The 7-Gate Compass Framework -->
+        <div class="about-card card-stock is-expanded" id="about-card-5">
+          <button class="about-card-header" type="button" aria-expanded="true" aria-controls="about-card-5-content">
+            <div class="about-card-title-group">
+              <span class="about-icon-pill">🏛️</span>
+              <div class="about-header-text">
+                <span class="about-card-badge">COMPASS BLUEPRINT</span>
+                <h3 class="about-card-title">The 7-Gate Cartographer's Compass</h3>
+              </div>
+            </div>
+            <span class="about-accordion-icon">▼</span>
+          </button>
+          <div class="about-card-content" id="about-card-5-content">
+            <p class="about-section-p">
+              Every expedition verdict is calibrated through 7 intentional decision gates:
+            </p>
+            <div class="about-gates-mini-grid">
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 1</span>
+                <div><strong>Crew Manifest:</strong> Solo Voyager, Duo Partners, Inner Circle, Family</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 2</span>
+                <div><strong>Departure Horizon:</strong> Origin corridor & airline alliance fortress hub</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 3</span>
+                <div><strong>Sensory Frequency:</strong> Atmospheric canvas (Maritime cliffs, alpine mist, ancient stones, neon kinetic, terracotta)</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 4</span>
+                <div><strong>Culinary Signature:</strong> Gastronomic philosophy (Terroir tavernas, haute gastronomy, street food, alpine refuge)</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 5</span>
+                <div><strong>Lodging Sanctuary:</strong> Twilight retreat style (Boutique heritage, secluded cabins, ryokans, high-value sweet spots)</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 6</span>
+                <div><strong>Flight Arsenal:</strong> Long-haul funding currency (Transferable points including Amex, Chase, Capital One, Citi, Bilt, & Rove Miles; cash connoisseur; mixed hybrid)</div>
+              </div>
+              <div class="mini-gate-item">
+                <span class="mini-gate-badge">GATE 7</span>
+                <div><strong>Expedition Tempo:</strong> Daily cadence of discovery (Balanced deliberate, dolce far niente, high-velocity)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-secondary btn-sm" id="btn-about-close" type="button">
+          Close
+        </button>
+        <button class="btn btn-primary btn-sm btn-about-start" id="btn-about-start-quiz" type="button">
+          Begin 7-Gate Compass →
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Looker Studio Analytics & Catalog Trends Modal -->
+  <div class="analytics-modal-backdrop" id="analytics-modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="analytics-modal-title">
+    <div class="analytics-modal card-stock">
+      <div class="analytics-modal-header">
+        <div class="analytics-title-group">
+          <span class="modal-kicker">TELEMETRY & CATALOG TRENDS</span>
+          <h3 class="modal-title" id="analytics-modal-title">Looker Studio Analytics Dashboard</h3>
+        </div>
+        <button class="modal-close" id="btn-close-analytics-modal" aria-label="Close analytics dialog">✕</button>
+      </div>
+
+      <div class="analytics-modal-body">
+        <p class="modal-desc">
+          User deliberation sessions, destination matches, and favorited itineraries are logged with geo coordinates and corridor patterns for deep trend analysis in <strong>Google Looker Studio</strong>.
+        </p>
+
+        <!-- Telemetry Summary Cards -->
+        <div class="analytics-stats-grid" id="analytics-stats-grid">
+          <div class="stat-card">
+            <span class="stat-num" id="stat-total-sessions">--</span>
+            <span class="stat-label">EXPEDITION SESSIONS</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-catalog-size">Curated</span>
+            <span class="stat-label">GLOBAL ARCHIVE</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-total-favorites">--</span>
+            <span class="stat-label">SAVED EXPEDITIONS</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-top-dest">--</span>
+            <span class="stat-label">#1 MOST FREQUENT MATCH</span>
+          </div>
+        </div>
+
+        <!-- Looker Studio Connect Section -->
+        <div class="looker-action-box">
+          <div class="looker-action-header">
+            <h4>📈 Connect Directly to Looker Studio</h4>
+            <p>Download the live CSV export or sync into Google Sheets for instant geo bubble maps, corridor breakdowns, and frequency charts.</p>
+          </div>
+
+          <div class="looker-action-buttons">
+            <a href="/api/analytics/export" class="btn btn-primary" download="findyourpassport_looker_analytics.csv" id="btn-download-looker-csv">
+              📥 Download Looker Studio CSV Dataset
+            </a>
+            <button class="btn btn-secondary" id="btn-copy-sheets-formula" type="button">
+              📋 Copy Google Sheets Import Formula
+            </button>
+          </div>
+
+          <div class="sheets-formula-box" id="sheets-formula-box" style="display: none;">
+            <code>=IMPORTDATA("http://localhost:3000/api/analytics/export")</code>
+            <span class="formula-copied-hint" id="formula-copied-hint">Formula copied to clipboard!</span>
+          </div>
+        </div>
+
+        <!-- Top Destinations & Gap Opportunities Breakdown -->
+        <div class="analytics-breakdown-row">
+          <div class="breakdown-col">
+            <h4 class="breakdown-heading">Most Frequent Destinations Landed On</h4>
+            <div class="rank-list" id="rank-list-destinations">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+          <div class="breakdown-col">
+            <h4 class="breakdown-heading">Catalog Expansion Opportunities</h4>
+            <p class="gap-text">
+              Tracks high-demand travel vibes where additional destinations could be added to <code>destinations.js</code> in future releases.
+            </p>
+            <div class="gap-pills" id="gap-pills-list">
+              <span class="gap-pill">🌟 Alpine Minimalist / Asia Corridor</span>
+              <span class="gap-pill">🌟 Coastal Recharger / South America</span>
+              <span class="gap-pill">🌟 Architectural Flâneur / Central Europe</span>
+              <span class="gap-pill">🌟 Metro Cartographer / Southeast Asia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analytics-modal-footer">
+        <button class="btn btn-secondary" id="btn-done-analytics" type="button">Close Telemetry</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="destinations.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

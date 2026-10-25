@@ -1,0 +1,50 @@
+{
+  "victor@example.com": [
+    {
+      "destKey": "sansebastian",
+      "destinationName": "San Sebastián & Basque Coast",
+      "airportCode": "EAS/BIO",
+      "country": "Spain",
+      "flag": "🇪🇸",
+      "archetype": "The Epicurean Curator",
+      "primaryRoute": "Partner Alliance Sweet Spot",
+      "baseFare": 630,
+      "savedAt": "2026-10-12T15:49:10.516Z"
+    }
+  ],
+  "traveler@gmail.com": [
+    {
+      "destKey": "malta",
+      "destinationName": "Valletta & Gozo, Malta",
+      "airportCode": "MLA",
+      "country": "Malta",
+      "flag": "🇲🇹",
+      "archetype": "The Architectural Flâneur",
+      "primaryRoute": "DEN → MLA on United Airlines (Star Alliance)",
+      "baseFare": 620,
+      "savedAt": "2026-10-14T18:54:02.635Z"
+    },
+    {
+      "destKey": "morocco",
+      "destinationName": "Marrakech & Atlas Mtns, Morocco",
+      "airportCode": "RAK",
+      "country": "Morocco",
+      "flag": "🇲🇦",
+      "archetype": "The Alpine Minimalist",
+      "primaryRoute": "ORD → RAK on United Airlines (Star Alliance)",
+      "baseFare": 610,
+      "savedAt": "2026-10-13T18:48:10.685Z"
+    },
+    {
+      "destKey": "sansebastian",
+      "destinationName": "San Sebastián & Basque Country, Spain",
+      "airportCode": "EAS",
+      "country": "Spain",
+      "flag": "🇪🇸",
+      "archetype": "The Epicurean Strategist",
+      "primaryRoute": "BOS → EAS on Delta & British Airways (SkyTeam & Oneworld)",
+      "baseFare": 630,
+      "savedAt": "2026-10-13T18:45:26.836Z"
+    }
+  ]
+}
