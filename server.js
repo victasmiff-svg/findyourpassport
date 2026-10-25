@@ -1243,9 +1243,13 @@ const MIME_TYPES = {
 };
 
 // Data Directory & Looker Studio Analytics Persistence
-const DATA_DIR = path.join(__dirname, 'data');
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+const DATA_DIR = process.env.DATA_DIR || (process.env.K_SERVICE || process.env.FUNCTION_TARGET ? '/tmp' : path.join(__dirname, 'data'));
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+} catch {
+  // Ignore in read-only environments
 }
 
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
