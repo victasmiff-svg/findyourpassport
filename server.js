@@ -530,6 +530,8 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
       primaryRoute = 'SEA → PPT on Alaska Airlines Nonstop (Oneworld)';
     } else if (['LAX', 'SFO', 'SEA'].includes(hub) && ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore'].includes(key)) {
       primaryRoute = `${hub} → ${dest.code} on Pacific Flagship Corridors (EVA Air / STARLUX / ANA / JAL)`;
+    } else if (['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos'].includes(key) && (defaultAlliance === 'Star Alliance' || ['ORD', 'DEN', 'IAH', 'EWR', 'IAD'].includes(hub))) {
+      primaryRoute = `${hub} → ${dest.code} on United & Copa Airlines (Star Alliance)`;
     } else {
       primaryRoute = `${hub} → ${dest.code} on ${carrierName} (${defaultAlliance})`;
     }
@@ -543,6 +545,7 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
 
   if (!flightSecret) {
     const isPacificDest = ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore', 'bali', 'thailand', 'phuket', 'hanoi', 'halong', 'malaysia', 'sydney', 'melbourne', 'newzealand', 'tahiti'].includes(key);
+    const isLatinDest = ['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos', 'salta', 'bariloche', 'atacama', 'curacao', 'aruba'].includes(key);
 
     if (hub === 'ORD' && dest.code === 'JFK') {
       flightSecret = `From ORD: High-frequency nonstop corridor on American Airlines (Oneworld). Primary award seat space is reliably booked through Atmos Rewards (Alaska Airlines) or British Airways Avios using American Airlines as the operating carrier, alongside United MileagePlus / Aeroplan into Newark (EWR). ${dest.points}`;
@@ -553,11 +556,13 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
     } else if (hub === 'ORD') {
       flightSecret = `From ORD (Dual Oneworld & Star Alliance Hub): ${dest.points} Target partner award availability via Atmos Rewards/Avios (American Airlines) or Aeroplan (United Airlines).`;
     } else if (hub === 'DEN') {
-      flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan or Avianca LifeMiles for long-haul business cabins, alongside United MileagePlus.`;
+      flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan, Avianca LifeMiles, or Copa Airlines ConnectMiles (1:1 from Citi ThankYou), alongside United MileagePlus.`;
     } else if (hub === 'MSP') {
       flightSecret = `From MSP (Delta SkyTeam Fortress): ${dest.points} Leverage SkyTeam partner redemptions via Air France/KLM Flying Blue promo awards and Virgin Atlantic Flying Club to sidestep Delta dynamic pricing.`;
     } else if (isPacificDest && (['LAX', 'SFO', 'SEA'].includes(hub) || key === 'taipei')) {
       flightSecret = `From ${hub}: Pacific flagship corridor featuring Star Alliance awards on EVA Air via Aeroplan/United, or boutique luxury cabins on STARLUX Airlines booked via Atmos Rewards (Alaska) or American Airlines. ${dest.points}`;
+    } else if (isLatinDest && ['MIA', 'JFK', 'BOS', 'ATL', 'LAX', 'SFO', 'DFW'].includes(hub)) {
+      flightSecret = `From ${hub}: Central & South American gateway corridor. ${dest.points} Target partner award availability via Star Alliance (Copa Airlines / Avianca) and Oneworld partner routes.`;
     } else if (key === 'seoul' || hub === 'ICN') {
       flightSecret = `From ${hub}: Korean Air (SkyTeam, combined with Asiana) nonstop corridor. Target award space through Delta SkyMiles or Flying Blue promo awards. ${dest.points}`;
     } else if (hub === 'LHR') {
@@ -843,7 +848,7 @@ function selectTopMatchesForArchetype(archetype, manifest) {
 
     // Gate 6 Flight Arsenal / Funding Model Affinities (+10 to +12 pts)
     if (funding === 'transferable_points') {
-      if (fullText.includes('avios') || fullText.includes('aeroplan') || fullText.includes('flying blue') || fullText.includes('transfer') || fullText.includes('partner') || fullText.includes('1:1') || fullText.includes('sweet spot')) {
+      if (fullText.includes('avios') || fullText.includes('aeroplan') || fullText.includes('flying blue') || fullText.includes('copa') || fullText.includes('connectmiles') || fullText.includes('transfer') || fullText.includes('partner') || fullText.includes('1:1') || fullText.includes('sweet spot')) {
         score += 12;
       }
       if (['madrid', 'paris', 'london', 'tokyo', 'frankfurt', 'dubai', 'singapore', 'doha', 'amsterdam'].includes(key)) {
@@ -950,6 +955,7 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * British Airways/Iberia Avios: Distance-based off-peak sweet spots (typically 34k–42k partner business) and Oneworld domestic redemptions.
      * Virgin Atlantic Flying Club: Strictly for partner premium cabins on long-haul routes (e.g. ANA business awards at 45k–55k or London flights)—DO NOT recommend for domestic US corridors or American Airlines routes.
      * Avianca LifeMiles or Air Canada Aeroplan: Star Alliance routes (including EVA Air and Lufthansa Group) without carrier surcharges.
+     * Copa Airlines ConnectMiles (1:1 transfer partner from Citi ThankYou): Premier Star Alliance connectivity through the Panama City (PTY) "Hub of the Americas" across Central and South America (Cartagena, Medellín, Costa Rica, Guatemala, Peru, Buenos Aires, Santiago) and the Caribbean without carrier surcharges.
     - Lodging Architecture (stayStyle) MUST STRICTLY describe housing and accommodations (boutique hotels, traditional machiya townhouses, riads, hillside cabins, apartments, ryokans). stayStyle must NEVER contain flight routes, transit connections, airline names, or departure airports (e.g. NEVER mention Alaska Airlines, nonstops from SEA, or flights). Housing options only.
     - Route & Award Strategy (flightSecret / pointsPlay): Always tailor specifically to the user's selected originHub. Never mention SEA-KIX, SEA-PPT, or Alaska Airlines Seattle nonstops unless the selected originHub is explicitly SEA.
    - Always express point requirements using realistic ranges or partner sweet-spot terminology rather than static single numbers.
