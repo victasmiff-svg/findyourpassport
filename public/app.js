@@ -681,12 +681,6 @@
     previewDestName: document.getElementById('preview-dest-name'),
     previewDestSub: document.getElementById('preview-dest-sub'),
     gsiButtonSlot: document.getElementById('gsi-button-slot'),
-    btnInstantGoogleLogin: document.getElementById('btn-instant-google-login'),
-    btnToggleCustomLogin: document.getElementById('btn-toggle-custom-login'),
-    customLoginFields: document.getElementById('custom-login-fields'),
-    inputCustomName: document.getElementById('input-custom-name'),
-    inputCustomEmail: document.getElementById('input-custom-email'),
-    btnSubmitCustomLogin: document.getElementById('btn-submit-custom-login'),
 
     // About / Explainer Slide-Over Drawer
     btnHeaderAbout: document.getElementById('btn-header-about'),
@@ -1977,33 +1971,6 @@
       });
     }
 
-    if (elements.btnInstantGoogleLogin) {
-      elements.btnInstantGoogleLogin.addEventListener('click', () => {
-        handleInstantGoogleLogin();
-      });
-    }
-
-    if (elements.btnToggleCustomLogin && elements.customLoginFields) {
-      elements.btnToggleCustomLogin.addEventListener('click', () => {
-        const isHidden = elements.customLoginFields.style.display === 'none';
-        elements.customLoginFields.style.display = isHidden ? 'flex' : 'none';
-      });
-    }
-
-    if (elements.btnSubmitCustomLogin) {
-      elements.btnSubmitCustomLogin.addEventListener('click', () => {
-        const name = (elements.inputCustomName?.value || '').trim() || 'Traveler';
-        const email = (elements.inputCustomEmail?.value || '').trim() || 'traveler@gmail.com';
-        handleInstantGoogleLogin({
-          id: `custom_${Date.now()}`,
-          name,
-          email,
-          picture: '',
-          given_name: name.split(' ')[0] || 'Traveler'
-        });
-      });
-    }
-
     // --- Persistent Heart Buttons on Reveal & Dossier ---
     if (elements.btnFavoriteMatch) {
       elements.btnFavoriteMatch.addEventListener('click', () => {
@@ -2232,10 +2199,49 @@
     initGoogleIdentityServices();
   }
 
+  function decodeClientJwt(token) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      const payload = JSON.parse(jsonPayload);
+      const adminEmails = ['victasmiff@gmail.com'];
+      const email = (payload.email || '').toLowerCase().trim();
+      return {
+        id: payload.sub,
+        email: email,
+        name: payload.name || email.split('@')[0],
+        picture: payload.picture || '',
+        given_name: payload.given_name || (payload.name || '').split(' ')[0] || 'Traveler',
+        isAdmin: adminEmails.includes(email)
+      };
+    } catch (err) {
+      console.error('[FindYourPassport] Failed to decode Google JWT client-side:', err);
+      return null;
+    }
+  }
+
   function initGoogleIdentityServices() {
     if (typeof window !== 'undefined' && window.google && window.google.accounts && window.google.accounts.id) {
       try {
-        const googleClientId = window.GOOGLE_CLIENT_ID || 'findyourpassport-client-id.apps.googleusercontent.com';
+        const metaClientId = document.querySelector('meta[name="google-signin-client_id"]')?.getAttribute('content');
+        const googleClientId = window.GOOGLE_CLIENT_ID || (metaClientId && !metaClientId.startsWith('YOUR_') && !metaClientId.includes('PLACEHOLDER') ? metaClientId : null);
+
+        if (!googleClientId || googleClientId.includes('findyourpassport-client-id')) {
+          console.warn('[FindYourPassport] Real Google Client ID not yet configured. Please set your OAuth Web Client ID in index.html.');
+          if (elements.gsiButtonSlot) {
+            elements.gsiButtonSlot.innerHTML = `
+              <div style="padding: 12px 16px; border: 1px dashed rgba(201, 168, 76, 0.45); border-radius: 8px; font-size: 0.82rem; color: var(--color-ink-muted, #7c6f5a); text-align: center; line-height: 1.45;">
+                <span style="font-weight: 600; color: var(--color-ink, #2c251e); display: block; margin-bottom: 4px;">Google Sign-In Configuration</span>
+                Add your Google Cloud OAuth Client ID to <code>index.html</code> to complete setup.
+              </div>
+            `;
+          }
+          return;
+        }
+
         window.google.accounts.id.initialize({
           client_id: googleClientId,
           callback: handleGoogleCredentialResponse,
@@ -2244,6 +2250,7 @@
         });
 
         if (elements.gsiButtonSlot) {
+          elements.gsiButtonSlot.innerHTML = '';
           window.google.accounts.id.renderButton(elements.gsiButtonSlot, {
             theme: 'outline',
             size: 'large',
@@ -2274,10 +2281,17 @@
         const data = await res.json();
         if (data.user) {
           await finalizeLogin(data.user, data.token);
+          return;
         }
       }
     } catch (err) {
-      console.error('[FindYourPassport] Error verifying Google credential:', err);
+      console.warn('[FindYourPassport] Backend auth unreachable, resolving credential in browser:', err.message);
+    }
+
+    // Client-side decoding fallback for static hosting
+    const user = decodeClientJwt(response.credential);
+    if (user) {
+      await finalizeLogin(user, `client_sid_${Date.now()}`);
     }
   }
 
