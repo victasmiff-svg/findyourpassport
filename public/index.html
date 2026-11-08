@@ -688,43 +688,56 @@
               </ul>
             </div>
 
-            <!-- Active Transfer Arbitrage Box -->
+            <!-- Active Transfer Arbitrage Box (Accordion) -->
             <div class="dossier-arbitrage-box" id="dossier-arbitrage-box" style="display: none;">
-              <div class="arbitrage-header">
-                <div class="arbitrage-badge-group">
-                  <span class="arbitrage-sparkle">✦</span>
-                  <span class="arbitrage-kicker">LIMITED-TIME TRANSFER ARBITRAGE</span>
+              <button type="button" class="arbitrage-accordion-toggle" id="arbitrage-accordion-toggle" aria-expanded="false" aria-controls="arbitrage-accordion-content">
+                <div class="arbitrage-summary-main">
+                  <div class="arbitrage-header">
+                    <div class="arbitrage-badge-group">
+                      <span class="arbitrage-sparkle">✦</span>
+                      <span class="arbitrage-kicker">LIMITED-TIME TRANSFER ARBITRAGE</span>
+                    </div>
+                    <span class="arbitrage-bonus-pill" id="arbitrage-bonus-pill">+25% Bonus</span>
+                  </div>
+                  <h4 class="arbitrage-headline" id="arbitrage-headline">American Express 25% Bonus to Flying Blue</h4>
+                  <div class="arbitrage-toggle-prompt">
+                    <span class="arbitrage-prompt-text" id="arbitrage-prompt-text">View Arbitrage Breakdown</span>
+                    <span class="arbitrage-chevron" aria-hidden="true">▾</span>
+                  </div>
                 </div>
-                <span class="arbitrage-bonus-pill" id="arbitrage-bonus-pill">+25% Bonus</span>
-              </div>
-              <h4 class="arbitrage-headline" id="arbitrage-headline">American Express 25% Bonus to Flying Blue</h4>
-              <p class="arbitrage-desc" id="arbitrage-desc">
-                Reduces typical transatlantic saver business awards down to 40,000 Amex points.
-              </p>
+              </button>
 
-              <div class="arbitrage-math-panel">
-                <div class="arbitrage-math-row">
-                  <span class="arbitrage-math-label">Example Standard Award Rate</span>
-                  <span class="arbitrage-math-val" id="math-standard-rate">50,000 miles</span>
-                </div>
-                <div class="arbitrage-math-row highlight">
-                  <span class="arbitrage-math-label">Your Out-of-Pocket Cost</span>
-                  <span class="arbitrage-math-val" id="math-discounted-rate">40,000 Amex MR pts</span>
-                </div>
-                <div class="arbitrage-math-row savings">
-                  <span class="arbitrage-math-label">Arbitrage Savings</span>
-                  <span class="arbitrage-math-val" id="math-savings">10,000 pts saved (20% Net Gain)</span>
-                </div>
-              </div>
+              <div class="arbitrage-accordion-content" id="arbitrage-accordion-content" role="region" aria-labelledby="arbitrage-accordion-toggle">
+                <div class="arbitrage-content-inner">
+                  <p class="arbitrage-desc" id="arbitrage-desc">
+                    Reduces typical transatlantic saver business awards down to 40,000 Amex points.
+                  </p>
 
-              <div class="arbitrage-footer">
-                <div class="arbitrage-timing">
-                  <span class="arbitrage-icon">⏳</span>
-                  <span class="arbitrage-timing-text" id="arbitrage-window">Expires in 22 days (Nov 30, 2026)</span>
+                  <div class="arbitrage-math-panel">
+                    <div class="arbitrage-math-row">
+                      <span class="arbitrage-math-label">Example Standard Award Rate</span>
+                      <span class="arbitrage-math-val" id="math-standard-rate">50,000 miles</span>
+                    </div>
+                    <div class="arbitrage-math-row highlight">
+                      <span class="arbitrage-math-label">Your Out-of-Pocket Cost</span>
+                      <span class="arbitrage-math-val" id="math-discounted-rate">40,000 Amex MR pts</span>
+                    </div>
+                    <div class="arbitrage-math-row savings">
+                      <span class="arbitrage-math-label">Arbitrage Savings</span>
+                      <span class="arbitrage-math-val" id="math-savings">10,000 pts saved (20% Net Gain)</span>
+                    </div>
+                  </div>
+
+                  <div class="arbitrage-footer">
+                    <div class="arbitrage-timing">
+                      <span class="arbitrage-icon">⏳</span>
+                      <span class="arbitrage-timing-text" id="arbitrage-window">Expires in 22 days (Nov 30, 2026)</span>
+                    </div>
+                    <p class="arbitrage-disclaimer">
+                      ※ Baseline example for standard saver space; actual redemption requirements scale proportionally based on origin, route, and cabin.
+                    </p>
+                  </div>
                 </div>
-                <p class="arbitrage-disclaimer">
-                  ※ Baseline example for standard saver space; actual redemption requirements scale proportionally based on origin, route, and cabin.
-                </p>
               </div>
             </div>
           </div>

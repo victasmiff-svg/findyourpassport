@@ -5451,13 +5451,43 @@ body::before {
   gap: 18px;
 }
 
-/* Dossier Arbitrage Box */
+/* Dossier Arbitrage Box (Accordion) */
 .dossier-arbitrage-box {
   background: linear-gradient(180deg, #fffefc 0%, #fbf7ee 100%);
   border: 1px solid rgba(201, 168, 76, 0.4);
   border-radius: var(--radius-md);
-  padding: 20px;
+  padding: 13px 16px;
   box-shadow: 0 3px 12px rgba(201, 168, 76, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dossier-arbitrage-box:hover {
+  border-color: rgba(201, 168, 76, 0.65);
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.12);
+}
+
+.arbitrage-accordion-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.arbitrage-accordion-toggle:focus-visible {
+  outline: 2px solid #b38927;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.arbitrage-summary-main {
+  display: flex;
+  flex-direction: column;
 }
 
 .arbitrage-header {
@@ -5465,7 +5495,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .arbitrage-badge-group {
@@ -5476,14 +5506,14 @@ body::before {
 
 .arbitrage-sparkle {
   color: #b38927;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .arbitrage-kicker {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: #8c6818;
   text-transform: uppercase;
 }
@@ -5492,26 +5522,83 @@ body::before {
   background: #b38927;
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 12px;
+  white-space: nowrap;
 }
 
 .arbitrage-headline {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--color-ink);
-  margin-bottom: 6px;
+  margin: 0 0 5px 0;
   line-height: 1.35;
+}
+
+.arbitrage-toggle-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #8c6818;
+  margin-top: 2px;
+  transition: color 0.2s ease;
+}
+
+.arbitrage-accordion-toggle:hover .arbitrage-toggle-prompt {
+  color: #634608;
+}
+
+.arbitrage-chevron {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dossier-arbitrage-box.expanded .arbitrage-chevron {
+  transform: rotate(180deg);
+}
+
+/* Accordion Expand / Collapse via CSS Grid */
+.arbitrage-accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.dossier-arbitrage-box.expanded .arbitrage-accordion-content {
+  grid-template-rows: 1fr;
+}
+
+.arbitrage-content-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 1px dashed rgba(201, 168, 76, 0.3);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dossier-arbitrage-box.expanded .arbitrage-content-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .arbitrage-desc {
   font-size: 13px;
   color: var(--color-ink-muted);
   line-height: 1.5;
-  margin-bottom: 14px;
+  margin: 0 0 12px 0;
 }
 
 /* Arbitrage Math Panel */

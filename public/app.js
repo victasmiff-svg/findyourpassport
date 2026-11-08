@@ -732,6 +732,8 @@
     passBonusText: document.getElementById('pass-bonus-text'),
     passBonusBadge: document.getElementById('pass-bonus-badge'),
     dossierArbitrageBox: document.getElementById('dossier-arbitrage-box'),
+    arbitrageAccordionToggle: document.getElementById('arbitrage-accordion-toggle'),
+    arbitragePromptText: document.getElementById('arbitrage-prompt-text'),
     arbitrageBonusPill: document.getElementById('arbitrage-bonus-pill'),
     arbitrageHeadline: document.getElementById('arbitrage-headline'),
     arbitrageDesc: document.getElementById('arbitrage-desc'),
@@ -1961,6 +1963,17 @@
     if (elements.passBonusBanner) {
       elements.passBonusBanner.addEventListener('click', () => {
         openBonusesDrawer();
+      });
+    }
+
+    if (elements.arbitrageAccordionToggle) {
+      elements.arbitrageAccordionToggle.addEventListener('click', () => {
+        if (!elements.dossierArbitrageBox) return;
+        const isExpanded = elements.dossierArbitrageBox.classList.toggle('expanded');
+        elements.arbitrageAccordionToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        if (elements.arbitragePromptText) {
+          elements.arbitragePromptText.textContent = isExpanded ? 'Hide Arbitrage Breakdown' : 'View Arbitrage Breakdown';
+        }
       });
     }
 
@@ -3808,9 +3821,17 @@
         }
       }
 
-      // 2. Dossier Arbitrage Box
+      // 2. Dossier Arbitrage Box (Accordion)
       if (elements.dossierArbitrageBox) {
         elements.dossierArbitrageBox.style.display = 'block';
+        // Reset to collapsed on initial render to preserve vertical screen area
+        elements.dossierArbitrageBox.classList.remove('expanded');
+        if (elements.arbitrageAccordionToggle) {
+          elements.arbitrageAccordionToggle.setAttribute('aria-expanded', 'false');
+        }
+        if (elements.arbitragePromptText) {
+          elements.arbitragePromptText.textContent = 'View Arbitrage Breakdown';
+        }
         if (elements.arbitrageBonusPill) {
           elements.arbitrageBonusPill.textContent = bonus.badgeLabel || `+${bonus.bonusPercent}% Bonus`;
         }
