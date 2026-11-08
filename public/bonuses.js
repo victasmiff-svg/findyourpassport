@@ -112,12 +112,12 @@ var ACTIVE_TRANSFER_BONUSES = [
     headline: "30% Amex MR Bonus to Virgin Atlantic Flying Club",
     badgeLabel: "+30% Amex Bonus",
     exampleStandardRate: 45000,
-    cabinContext: "ANA / Delta Partner Long-Haul",
+    cabinContext: "Delta Transatlantic / SkyTeam Partner Long-Haul",
     currencyNeeded: "Amex Membership Rewards",
     keywords: ["virgin atlantic", "flying club"],
-    eligibleDestinations: ["tokyo", "kyoto", "osaka", "london", "cornwall", "edinburgh"],
-    notes: "Unlocks ANA business class to Tokyo for only ~34,500 Amex points, or Delta transatlantic flights to Europe without fuel surcharges.",
-    proTip: "Target partner redemptions on ANA and Delta to avoid London Heathrow's high carrier fees."
+    eligibleDestinations: ["london", "cornwall", "edinburgh"],
+    notes: "Reduces 45,000-point Delta transatlantic partner flights to Europe down to ~34,500 Amex points without fuel surcharges, or books Virgin Atlantic transatlantic routes with lower point requirements.",
+    proTip: "Target partner redemptions on Delta to avoid London Heathrow's high carrier fees."
   },
 
   // 6. Capital One Miles -> Virgin Atlantic Flying Club (30% Bonus)
@@ -212,13 +212,15 @@ function matchBonusForDestination(destKey, pointsText) {
   const normalizedKey = (destKey || '').toLowerCase();
   const normalizedText = (pointsText || '').toLowerCase();
 
+  // 1. Explicit destination list check takes highest priority
   for (const bonus of activeBonuses) {
-    // 1. Explicit destination list check
     if (bonus.eligibleDestinations && bonus.eligibleDestinations.includes(normalizedKey)) {
       return bonus;
     }
+  }
 
-    // 2. Keyword check against points strategy text
+  // 2. Keyword check against points strategy text as fallback
+  for (const bonus of activeBonuses) {
     if (bonus.keywords && bonus.keywords.some(kw => normalizedText.includes(kw.toLowerCase()))) {
       return bonus;
     }
