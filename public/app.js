@@ -717,7 +717,28 @@
     formulaCopiedHint: document.getElementById('formula-copied-hint'),
 
     // Toast Container
-    toastContainer: document.getElementById('toast-container')
+    toastContainer: document.getElementById('toast-container'),
+
+    // Transfer Bonuses & Arbitrage
+    btnHeaderBonuses: document.getElementById('btn-header-bonuses'),
+    headerBonusCount: document.getElementById('header-bonus-count'),
+    bonusesDrawerBackdrop: document.getElementById('bonuses-drawer-backdrop'),
+    bonusesDrawer: document.getElementById('bonuses-drawer'),
+    btnCloseBonusesDrawer: document.getElementById('btn-close-bonuses-drawer'),
+    btnBonusesDrawerDone: document.getElementById('btn-bonuses-drawer-done'),
+    bonusesListContainer: document.getElementById('bonuses-list-container'),
+    passBonusBanner: document.getElementById('pass-bonus-banner'),
+    passBonusTag: document.getElementById('pass-bonus-tag'),
+    passBonusText: document.getElementById('pass-bonus-text'),
+    passBonusBadge: document.getElementById('pass-bonus-badge'),
+    dossierArbitrageBox: document.getElementById('dossier-arbitrage-box'),
+    arbitrageBonusPill: document.getElementById('arbitrage-bonus-pill'),
+    arbitrageHeadline: document.getElementById('arbitrage-headline'),
+    arbitrageDesc: document.getElementById('arbitrage-desc'),
+    mathStandardRate: document.getElementById('math-standard-rate'),
+    mathDiscountedRate: document.getElementById('math-discounted-rate'),
+    mathSavings: document.getElementById('math-savings'),
+    arbitrageWindow: document.getElementById('arbitrage-window')
   };
 
   /**
@@ -1637,6 +1658,7 @@
     if (elements.btnRestart) elements.btnRestart.style.display = 'none';
 
     await initAuth();
+    initTransferBonusesHeader();
     if (window.location.search.includes('about=1') || window.location.hash === '#about') {
       openAboutDrawer();
     }
@@ -1910,6 +1932,38 @@
     }
 
     // --- Google Auth, Account Menu & Favorites Header Listeners ---
+    if (elements.btnHeaderBonuses) {
+      elements.btnHeaderBonuses.addEventListener('click', () => {
+        openBonusesDrawer();
+      });
+    }
+
+    if (elements.btnCloseBonusesDrawer) {
+      elements.btnCloseBonusesDrawer.addEventListener('click', () => {
+        closeBonusesDrawer();
+      });
+    }
+
+    if (elements.btnBonusesDrawerDone) {
+      elements.btnBonusesDrawerDone.addEventListener('click', () => {
+        closeBonusesDrawer();
+      });
+    }
+
+    if (elements.bonusesDrawerBackdrop) {
+      elements.bonusesDrawerBackdrop.addEventListener('click', (e) => {
+        if (e.target === elements.bonusesDrawerBackdrop) {
+          closeBonusesDrawer();
+        }
+      });
+    }
+
+    if (elements.passBonusBanner) {
+      elements.passBonusBanner.addEventListener('click', () => {
+        openBonusesDrawer();
+      });
+    }
+
     if (elements.btnHeaderFavorites) {
       elements.btnHeaderFavorites.addEventListener('click', () => {
         openFavoritesDrawer();
@@ -3517,6 +3571,9 @@
       elements.dossierNavDestTitle.textContent = match.destinationName || 'Expedition';
     }
 
+    // Update Transfer Bonus UI for Match (Boarding Pass & Dossier)
+    updateTransferBonusUI(match);
+
     // Update Favorite Heart State for match & tabs
     updateFavoriteUI();
   }
@@ -3564,6 +3621,9 @@
       if (elements.costTransit) elements.costTransit.textContent = match.dossier.costBreakdown.transit || '$25 / day';
       if (elements.costPoints) elements.costPoints.textContent = match.dossier.costBreakdown.pointsVal || '2.2¢ per point';
     }
+
+    // Update Transfer Bonus Arbitrage Area
+    updateTransferBonusUI(match);
 
     // 4 Signature Highlights
     if (elements.highlightsGrid) {
@@ -3635,6 +3695,148 @@
         elements.destinationMapIframe.src = embedSrc;
         elements.destinationMapIframe.setAttribute('data-current-src', embedSrc);
       }
+    }
+  }
+
+  /**
+   * Transfer Bonuses & Award Arbitrage Engine Functions
+   */
+  function initTransferBonusesHeader() {
+    if (typeof window.getLiveTransferBonuses === 'function') {
+      const activeBonuses = window.getLiveTransferBonuses();
+      if (activeBonuses.length > 0 && elements.btnHeaderBonuses) {
+        elements.btnHeaderBonuses.style.display = 'inline-flex';
+        if (elements.headerBonusCount) {
+          elements.headerBonusCount.textContent = activeBonuses.length;
+        }
+      }
+    }
+  }
+
+  function openBonusesDrawer() {
+    if (!elements.bonusesDrawerBackdrop) return;
+    elements.bonusesDrawerBackdrop.style.display = 'flex';
+    document.body.classList.add('drawer-open');
+    renderBonusesDrawerList();
+  }
+
+  function closeBonusesDrawer() {
+    if (!elements.bonusesDrawerBackdrop) return;
+    elements.bonusesDrawerBackdrop.style.display = 'none';
+    document.body.classList.remove('drawer-open');
+  }
+
+  function renderBonusesDrawerList() {
+    if (!elements.bonusesListContainer) return;
+    elements.bonusesListContainer.innerHTML = '';
+    const activeBonuses = (typeof window.getLiveTransferBonuses === 'function') ? window.getLiveTransferBonuses() : [];
+
+    if (activeBonuses.length === 0) {
+      elements.bonusesListContainer.innerHTML = `
+        <div style="text-align: center; padding: 30px 16px; color: var(--color-ink-muted);">
+          <p>No active limited-time transfer bonuses are currently running. Check back soon for seasonal partner promotions.</p>
+        </div>
+      `;
+      return;
+    }
+
+    activeBonuses.forEach(b => {
+      const math = (typeof window.calculateArbitrageMath === 'function') ? window.calculateArbitrageMath(b) : null;
+      const card = document.createElement('div');
+      card.className = 'bonus-drawer-card';
+      card.innerHTML = `
+        <div class="bonus-drawer-card-header">
+          <span class="bonus-drawer-bank">${b.bank}</span>
+          <span class="arbitrage-bonus-pill">${b.badgeLabel || '+' + b.bonusPercent + '% Bonus'}</span>
+        </div>
+        <h3 class="bonus-drawer-title">${b.headline}</h3>
+        <p class="bonus-drawer-notes">${b.notes || ''}</p>
+        ${b.proTip ? `<div class="bonus-drawer-protip">※ <strong>Arbitrage Tip:</strong> ${b.proTip}</div>` : ''}
+        ${math ? `
+          <div class="arbitrage-math-panel" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="arbitrage-math-row">
+              <span class="arbitrage-math-label">Example Standard Award Rate</span>
+              <span class="arbitrage-math-val">${math.exampleStandardRate.toLocaleString()} miles</span>
+            </div>
+            <div class="arbitrage-math-row highlight">
+              <span class="arbitrage-math-label">Your Out-of-Pocket Cost</span>
+              <span class="arbitrage-math-val">${math.pointsNeeded.toLocaleString()} ${math.currencyNeeded}</span>
+            </div>
+            <div class="arbitrage-math-row savings">
+              <span class="arbitrage-math-label">Arbitrage Savings</span>
+              <span class="arbitrage-math-val">${math.pointsSaved.toLocaleString()} pts saved (${math.netDiscountPercent}% Net Gain)</span>
+            </div>
+          </div>
+        ` : ''}
+        <div class="bonus-drawer-footer">
+          <span>⏳ Expires in ${math ? math.daysRemaining : '?'} days (${math ? math.formattedEndDate : ''})</span>
+          <span style="font-weight: 600; color: #b38927;">${b.alliance || 'Alliance Partner'}</span>
+        </div>
+      `;
+      elements.bonusesListContainer.appendChild(card);
+    });
+  }
+
+  /**
+   * Update Boarding Pass and Dossier with Active Transfer Bonus Arbitrage
+   */
+  function updateTransferBonusUI(match) {
+    if (!match) return;
+
+    const destKey = (match.destKey || '').toLowerCase();
+    const pointsText = `${match.pointsPlay || ''} ${match.flightSecret || ''} ${match.primaryRoute || ''} ${match.dossier?.costBreakdown?.pointsVal || ''}`;
+
+    let bonus = null;
+    if (typeof window.matchBonusForDestination === 'function') {
+      bonus = window.matchBonusForDestination(destKey, pointsText);
+    }
+
+    if (bonus && typeof window.calculateArbitrageMath === 'function') {
+      const math = window.calculateArbitrageMath(bonus);
+
+      // 1. Boarding Pass Banner
+      if (elements.passBonusBanner) {
+        elements.passBonusBanner.style.display = 'flex';
+        if (elements.passBonusTag) {
+          elements.passBonusTag.textContent = 'LIMITED-TIME TRANSFER ARBITRAGE';
+        }
+        if (elements.passBonusText) {
+          elements.passBonusText.textContent = `${bonus.headline}`;
+        }
+        if (elements.passBonusBadge) {
+          elements.passBonusBadge.textContent = bonus.badgeLabel || `+${bonus.bonusPercent}% Bonus`;
+        }
+      }
+
+      // 2. Dossier Arbitrage Box
+      if (elements.dossierArbitrageBox) {
+        elements.dossierArbitrageBox.style.display = 'block';
+        if (elements.arbitrageBonusPill) {
+          elements.arbitrageBonusPill.textContent = bonus.badgeLabel || `+${bonus.bonusPercent}% Bonus`;
+        }
+        if (elements.arbitrageHeadline) {
+          elements.arbitrageHeadline.textContent = bonus.headline || 'Active Transfer Arbitrage Sweet Spot';
+        }
+        if (elements.arbitrageDesc) {
+          elements.arbitrageDesc.textContent = bonus.notes || `Transfer bonus from ${bonus.bank} increases your award travel purchasing power.`;
+        }
+        // Exact label requested: "Example Standard Award Rate"
+        if (elements.mathStandardRate) {
+          elements.mathStandardRate.textContent = `${math.exampleStandardRate.toLocaleString()} miles`;
+        }
+        if (elements.mathDiscountedRate) {
+          elements.mathDiscountedRate.textContent = `${math.pointsNeeded.toLocaleString()} ${math.currencyNeeded}`;
+        }
+        if (elements.mathSavings) {
+          elements.mathSavings.textContent = `${math.pointsSaved.toLocaleString()} pts saved (${math.netDiscountPercent}% Net Gain)`;
+        }
+        if (elements.arbitrageWindow) {
+          elements.arbitrageWindow.textContent = `Expires in ${math.daysRemaining} days (${math.formattedEndDate})`;
+        }
+      }
+    } else {
+      if (elements.passBonusBanner) elements.passBonusBanner.style.display = 'none';
+      if (elements.dossierArbitrageBox) elements.dossierArbitrageBox.style.display = 'none';
     }
   }
 

@@ -34,6 +34,13 @@
           <span class="icon">↺</span> Reset Manifest
         </button>
 
+        <!-- Limited-Time Transfer Bonuses Button -->
+        <button class="btn-header-bonuses" id="btn-header-bonuses" type="button" title="View Active Limited-Time Transfer Bonuses" style="display: none;">
+          <span class="bonus-icon">✦</span>
+          <span class="bonus-label">Transfer Bonuses</span>
+          <span class="bonus-count-badge" id="header-bonus-count">0</span>
+        </button>
+
         <!-- Quick Access Explainer / About Button -->
         <button class="btn-header-about" id="btn-header-about" type="button" title="About FindYourPassport · How It Works & Matchmaking Philosophy">
           <span class="about-icon">🧭</span>
@@ -495,6 +502,16 @@
               </div>
             </div>
 
+            <!-- Active Transfer Bonus Arbitrage Banner -->
+            <div class="pass-bonus-banner" id="pass-bonus-banner" style="display: none;">
+              <span class="bonus-banner-sparkle">✦</span>
+              <div class="bonus-banner-info">
+                <span class="bonus-banner-tag" id="pass-bonus-tag">LIMITED-TIME TRANSFER ARBITRAGE</span>
+                <span class="bonus-banner-text" id="pass-bonus-text">American Express 25% Bonus to Air France / KLM Flying Blue</span>
+              </div>
+              <span class="bonus-banner-badge" id="pass-bonus-badge">+25% Bonus</span>
+            </div>
+
             <!-- Match Narrative -->
             <div class="pass-narrative-box">
               <h3 class="narrative-heading">Why This Matches Your Travel Profile:</h3>
@@ -635,39 +652,81 @@
             </p>
           </div>
 
-          <!-- Cost Breakdown Card -->
-          <div class="cost-breakdown-card">
-            <h3 class="cost-card-heading">Audited Cost Breakdown</h3>
-            <ul class="cost-list">
-              <li>
-                <span class="cost-icon">🏨</span>
-                <div class="cost-meta">
-                  <span class="cost-label">LODGING</span>
-                  <span class="cost-val" id="cost-lodging">$220 – $410 / night</span>
+          <!-- Cost Breakdown Card & Arbitrage Callout -->
+          <div class="dossier-economics-col">
+            <div class="cost-breakdown-card">
+              <h3 class="cost-card-heading">Audited Cost Breakdown</h3>
+              <ul class="cost-list">
+                <li>
+                  <span class="cost-icon">🏨</span>
+                  <div class="cost-meta">
+                    <span class="cost-label">LODGING</span>
+                    <span class="cost-val" id="cost-lodging">$220 – $410 / night</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="cost-icon">🍽️</span>
+                  <div class="cost-meta">
+                    <span class="cost-label">DINING</span>
+                    <span class="cost-val" id="cost-dining">$45 / day (Pintxos) – $180+ (Fine Dining)</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="cost-icon">🚆</span>
+                  <div class="cost-meta">
+                    <span class="cost-label">TRANSIT</span>
+                    <span class="cost-val" id="cost-transit">$18 / day (Euskotren & Coastal Walks)</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="cost-icon">💳</span>
+                  <div class="cost-meta">
+                    <span class="cost-label">POINTS ARSENAL</span>
+                    <span class="cost-val" id="cost-points">2.4¢–3.1¢ / pt via Avios & Hyatt</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Active Transfer Arbitrage Box -->
+            <div class="dossier-arbitrage-box" id="dossier-arbitrage-box" style="display: none;">
+              <div class="arbitrage-header">
+                <div class="arbitrage-badge-group">
+                  <span class="arbitrage-sparkle">✦</span>
+                  <span class="arbitrage-kicker">LIMITED-TIME TRANSFER ARBITRAGE</span>
                 </div>
-              </li>
-              <li>
-                <span class="cost-icon">🍽️</span>
-                <div class="cost-meta">
-                  <span class="cost-label">DINING</span>
-                  <span class="cost-val" id="cost-dining">$45 / day (Pintxos) – $180+ (Fine Dining)</span>
+                <span class="arbitrage-bonus-pill" id="arbitrage-bonus-pill">+25% Bonus</span>
+              </div>
+              <h4 class="arbitrage-headline" id="arbitrage-headline">American Express 25% Bonus to Flying Blue</h4>
+              <p class="arbitrage-desc" id="arbitrage-desc">
+                Reduces typical transatlantic saver business awards down to 40,000 Amex points.
+              </p>
+
+              <div class="arbitrage-math-panel">
+                <div class="arbitrage-math-row">
+                  <span class="arbitrage-math-label">Example Standard Award Rate</span>
+                  <span class="arbitrage-math-val" id="math-standard-rate">50,000 miles</span>
                 </div>
-              </li>
-              <li>
-                <span class="cost-icon">🚆</span>
-                <div class="cost-meta">
-                  <span class="cost-label">TRANSIT</span>
-                  <span class="cost-val" id="cost-transit">$18 / day (Euskotren & Coastal Walks)</span>
+                <div class="arbitrage-math-row highlight">
+                  <span class="arbitrage-math-label">Your Out-of-Pocket Cost</span>
+                  <span class="arbitrage-math-val" id="math-discounted-rate">40,000 Amex MR pts</span>
                 </div>
-              </li>
-              <li>
-                <span class="cost-icon">💳</span>
-                <div class="cost-meta">
-                  <span class="cost-label">POINTS ARSENAL</span>
-                  <span class="cost-val" id="cost-points">2.4¢–3.1¢ / pt via Avios & Hyatt</span>
+                <div class="arbitrage-math-row savings">
+                  <span class="arbitrage-math-label">Arbitrage Savings</span>
+                  <span class="arbitrage-math-val" id="math-savings">10,000 pts saved (20% Net Gain)</span>
                 </div>
-              </li>
-            </ul>
+              </div>
+
+              <div class="arbitrage-footer">
+                <div class="arbitrage-timing">
+                  <span class="arbitrage-icon">⏳</span>
+                  <span class="arbitrage-timing-text" id="arbitrage-window">Expires in 22 days (Nov 30, 2026)</span>
+                </div>
+                <p class="arbitrage-disclaimer">
+                  ※ Baseline example for standard saver space; actual redemption requirements scale proportionally based on origin, route, and cabin.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1262,6 +1321,41 @@
     </div>
   </div>
 
+  <!-- Active Transfer Bonuses Slide-Over Drawer -->
+  <div class="bonuses-drawer-backdrop" id="bonuses-drawer-backdrop" style="display: none;">
+    <aside class="bonuses-drawer" id="bonuses-drawer" aria-labelledby="bonuses-drawer-title" role="dialog" aria-modal="true">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span class="drawer-compass-icon">✦</span>
+          <div>
+            <span class="drawer-kicker">TRANSFER ARBITRAGE</span>
+            <h2 class="drawer-title" id="bonuses-drawer-title">Active Transfer Bonuses</h2>
+          </div>
+        </div>
+        <button class="drawer-close" id="btn-close-bonuses-drawer" type="button" aria-label="Close transfer bonuses">✕</button>
+      </div>
+
+      <div class="drawer-body" id="bonuses-drawer-body">
+        <div class="bonuses-drawer-intro">
+          <p>
+            Limited-time transfer bonuses drastically elevate your award travel purchasing power. 
+            When active, your credit card bank transfers deliver 15% to 30% more airline/hotel miles, reducing out-of-pocket point requirements.
+          </p>
+        </div>
+        <div class="bonuses-list-container" id="bonuses-list-container">
+          <!-- Dynamically populated from bonuses.js -->
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-primary btn-sm" id="btn-bonuses-drawer-done" type="button" style="width: 100%;">
+          Done
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <script src="bonuses.js"></script>
   <script src="destinations.js"></script>
   <script src="app.js"></script>
 </body>
