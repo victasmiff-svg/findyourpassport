@@ -1085,7 +1085,8 @@
       .replace(/Alaska\s+Airlines\s+direct\s+transpacific\s+nonstop\s+from\s+SEA\s+into\s+(?:KIX|PPT)[^,.;)]*(\([^)]*\))?[,.;]?\s*/gi, '')
       .replace(/Alaska\s+Airlines\s+direct\s+transpacific\s+nonstop\s+into\s+(?:Kansai(?:\/Osaka)?\s*\(KIX\)|KIX|Papeete(?:\s*\(PPT\))?|PPT)[^,.;)]*(\([^)]*\))?[,.;]?\s*/gi, '')
       .replace(/(?:plus\s+)?Alaska's\s+direct\s+transpacific\s+nonstops\s*\(SEA-KIX,\s*SEA-PPT\)[^,.;]*[,.;]?\s*/gi, '')
-      .replace(/\b(?:SEA-KIX|SEA-PPT)\b/gi, '')
+      .replace(/\b(?:SEA-KIX|SEA-PPT|SEA-GDL)\b/gi, '')
+      .replace(/Alaska\s+Airlines\s+nonstop\s+(?:Oneworld\s+)?service\s+from\s+SEA\s+to\s+Guadalajara\s*\((?:GDL)\)[^,.;]*[;,.]?\s*/gi, '')
       .replace(/from\s+Seattle\s*\((?:SEA)\)/gi, '')
       .replace(/,\s*,/g, ',')
       .replace(/\(\s*\)/g, '')
@@ -1169,6 +1170,8 @@
         primaryRoute = 'SEA → KIX on Alaska Airlines Nonstop (Oneworld)';
       } else if (hub === 'SEA' && (key === 'tahiti' || dest.code === 'PPT')) {
         primaryRoute = 'SEA → PPT on Alaska Airlines Nonstop (Oneworld)';
+      } else if (hub === 'SEA' && (key === 'sanmiguel' || dest.code === 'BJX')) {
+        primaryRoute = 'SEA → GDL on Alaska Airlines Nonstop (Oneworld gateway to Central Mexico / BJX)';
       } else if (['LAX', 'SFO', 'SEA'].includes(hub) && ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore'].includes(key)) {
         primaryRoute = `${hub} → ${dest.code} on Pacific Flagship Corridors (EVA Air / STARLUX / ANA / JAL)`;
       } else if (['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos'].includes(key) && (defaultAlliance === 'Star Alliance' || ['ORD', 'DEN', 'IAH', 'EWR', 'IAD'].includes(hub))) {
@@ -1194,10 +1197,12 @@
         flightSecret = `From SEA: Alaska Airlines direct transpacific nonstop from SEA into KIX (bookable via Atmos Rewards or Oneworld), followed by the 75-minute Haruka Express to Kyoto Station. ${dest.points}`;
       } else if (hub === 'SEA' && (key === 'tahiti' || dest.code === 'PPT')) {
         flightSecret = `From SEA: Alaska Airlines direct transpacific nonstop from SEA into PPT (bookable via Atmos Rewards or Oneworld). ${dest.points}`;
+      } else if (hub === 'SEA' && (key === 'sanmiguel' || dest.code === 'BJX')) {
+        flightSecret = `From SEA: Take advantage of Alaska Airlines' new nonstop service from SEA to Guadalajara (GDL)—providing a prime Oneworld gateway into central Mexico and a direct alternate airport for San Miguel de Allende & Guanajuato (BJX). ${dest.points}`;
       } else if (hub === 'ORD') {
         flightSecret = `From ORD (Dual Oneworld & Star Alliance Hub): ${dest.points} Target partner award availability via Atmos Rewards/Avios (American Airlines) or Aeroplan (United Airlines).`;
       } else if (hub === 'DEN') {
-        flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan, Avianca LifeMiles, or Copa Airlines ConnectMiles (1:1 from Citi ThankYou), alongside United MileagePlus.`;
+        flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan, Avianca LifeMiles, or Copa Airlines ConnectMiles (transfers from Citi, Rove, and Capital One), alongside United MileagePlus.`;
       } else if (hub === 'MSP') {
         flightSecret = `From MSP (Delta SkyTeam Fortress): ${dest.points} Leverage SkyTeam partner redemptions via Air France/KLM Flying Blue promo awards and Virgin Atlantic Flying Club to sidestep Delta dynamic pricing.`;
       } else if (isPacificDest && (['LAX', 'SFO', 'SEA'].includes(hub) || key === 'taipei')) {

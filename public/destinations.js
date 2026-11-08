@@ -1693,7 +1693,7 @@ var DESTINATIONS = {
         name: "San Miguel de Allende & Guanajuato, Mexico", code: "BJX", flag: "🇲🇽", archetype: "The Epicurean Curator", mapQuery: "San Miguel de Allende, Mexico", coordinates: { lat: 20.9144, lng: -100.7452 }, region: "Americas/Caribbean", baseFare: 340,
         narrative: "Colonial baroque architectural sanctuary in the central Mexican highlands. Ochre and terracotta courtyards, rooftop mezcal bars overlooking the pink neo-Gothic Parroquia spires, and organic farm-to-table culinary ateliers.",
         cash: "Colonial boutique suites with stone fireplaces ($80-$160/night); incredible street gorditas and churros under jacaranda trees.",
-        points: "Nonstop flights on American or United to Del Bajío (BJX) or Querétaro (QRO); luxury points stays at Rosewood San Miguel or boutique card portal properties.",
+        points: "Nonstop flights on American or United to Del Bajío (BJX) or Querétaro (QRO), or Alaska Airlines nonstop Oneworld service from Seattle (SEA) to Guadalajara (GDL) as a prime gateway to central Mexico; luxury points stays at Rosewood San Miguel or boutique card portal properties.",
         season: "October – April",
         seasonReason: "Crisp blue skies and dry, sunny 70-degree days with cool desert evenings ideal for rooftop dining.",
         weatherTip: "Pack sturdy, comfortable walking shoes—San Miguel's dramatic cobblestone inclines are best navigated on foot.",

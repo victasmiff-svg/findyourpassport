@@ -444,7 +444,8 @@ function sanitizeRouteStrategy(text, hub) {
     .replace(/Alaska\s+Airlines\s+direct\s+transpacific\s+nonstop\s+from\s+SEA\s+into\s+(?:KIX|PPT)[^,.;)]*(\([^)]*\))?[,.;]?\s*/gi, '')
     .replace(/Alaska\s+Airlines\s+direct\s+transpacific\s+nonstop\s+into\s+(?:Kansai(?:\/Osaka)?\s*\(KIX\)|KIX|Papeete(?:\s*\(PPT\))?|PPT)[^,.;)]*(\([^)]*\))?[,.;]?\s*/gi, '')
     .replace(/(?:plus\s+)?Alaska's\s+direct\s+transpacific\s+nonstops\s*\(SEA-KIX,\s*SEA-PPT\)[^,.;]*[,.;]?\s*/gi, '')
-    .replace(/\b(?:SEA-KIX|SEA-PPT)\b/gi, '')
+    .replace(/\b(?:SEA-KIX|SEA-PPT|SEA-GDL)\b/gi, '')
+    .replace(/Alaska\s+Airlines\s+nonstop\s+(?:Oneworld\s+)?service\s+from\s+SEA\s+to\s+Guadalajara\s*\((?:GDL)\)[^,.;]*[;,.]?\s*/gi, '')
     .replace(/from\s+Seattle\s*\((?:SEA)\)/gi, '')
     .replace(/,\s*,/g, ',')
     .replace(/\(\s*\)/g, '')
@@ -528,6 +529,8 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
       primaryRoute = 'SEA → KIX on Alaska Airlines Nonstop (Oneworld)';
     } else if (hub === 'SEA' && (key === 'tahiti' || dest.code === 'PPT')) {
       primaryRoute = 'SEA → PPT on Alaska Airlines Nonstop (Oneworld)';
+    } else if (hub === 'SEA' && (key === 'sanmiguel' || dest.code === 'BJX')) {
+      primaryRoute = 'SEA → GDL on Alaska Airlines Nonstop (Oneworld gateway to Central Mexico / BJX)';
     } else if (['LAX', 'SFO', 'SEA'].includes(hub) && ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore'].includes(key)) {
       primaryRoute = `${hub} → ${dest.code} on Pacific Flagship Corridors (EVA Air / STARLUX / ANA / JAL)`;
     } else if (['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos'].includes(key) && (defaultAlliance === 'Star Alliance' || ['ORD', 'DEN', 'IAH', 'EWR', 'IAD'].includes(hub))) {
@@ -553,10 +556,12 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
       flightSecret = `From SEA: Alaska Airlines direct transpacific nonstop from SEA into KIX (bookable via Atmos Rewards or Oneworld), followed by the 75-minute Haruka Express to Kyoto Station. ${dest.points}`;
     } else if (hub === 'SEA' && (key === 'tahiti' || dest.code === 'PPT')) {
       flightSecret = `From SEA: Alaska Airlines direct transpacific nonstop from SEA into PPT (bookable via Atmos Rewards or Oneworld). ${dest.points}`;
+    } else if (hub === 'SEA' && (key === 'sanmiguel' || dest.code === 'BJX')) {
+      flightSecret = `From SEA: Take advantage of Alaska Airlines' new nonstop service from SEA to Guadalajara (GDL)—providing a prime Oneworld gateway into central Mexico and a direct alternate airport for San Miguel de Allende & Guanajuato (BJX). ${dest.points}`;
     } else if (hub === 'ORD') {
       flightSecret = `From ORD (Dual Oneworld & Star Alliance Hub): ${dest.points} Target partner award availability via Atmos Rewards/Avios (American Airlines) or Aeroplan (United Airlines).`;
     } else if (hub === 'DEN') {
-      flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan, Avianca LifeMiles, or Copa Airlines ConnectMiles (1:1 from Citi ThankYou), alongside United MileagePlus.`;
+      flightSecret = `From DEN (United Star Alliance Fortress): ${dest.points} Target Star Alliance partner saver space on Air Canada Aeroplan, Avianca LifeMiles, or Copa Airlines ConnectMiles (transfers from Citi, Rove, and Capital One), alongside United MileagePlus.`;
     } else if (hub === 'MSP') {
       flightSecret = `From MSP (Delta SkyTeam Fortress): ${dest.points} Leverage SkyTeam partner redemptions via Air France/KLM Flying Blue promo awards and Virgin Atlantic Flying Club to sidestep Delta dynamic pricing.`;
     } else if (isPacificDest && (['LAX', 'SFO', 'SEA'].includes(hub) || key === 'taipei')) {
@@ -925,7 +930,8 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * ATL: Delta Air Lines & SkyTeam mega-fortress.
      * BOS: Premier Atlantic Great Circle gateway (Delta, British Airways, JetBlue).
      * SFO: United Star Alliance transpacific powerhouse featuring EVA Air, ANA, and Singapore Airlines.
-     * LAX, SEA: Pacific gateways with STARLUX, EVA Air, ANA, and cross-alliance nonstops. When originHub is SEA ONLY, prioritize Alaska Airlines' direct transpacific nonstops from SEA to Osaka/Kansai (KIX) and Papeete, Tahiti (PPT). NEVER mention SEA-KIX or SEA-PPT routes when the origin is not SEA (such as MEL, SYD, JFK, ORD, LHR, HND, etc.).
+     * LAX, SEA: Pacific gateways with STARLUX, EVA Air, ANA, and cross-alliance nonstops. When originHub is SEA ONLY, prioritize Alaska Airlines' direct nonstops: transpacific routes to Osaka/Kansai (KIX) and Papeete, Tahiti (PPT), as well as Alaska's nonstop service from SEA to Guadalajara (GDL), which provides a premier Oneworld gateway to central Mexico and serves as an alternate airport for San Miguel de Allende & Guanajuato (BJX). NEVER mention SEA-KIX, SEA-PPT, or SEA-GDL routes when the origin is not SEA (such as MEL, SYD, JFK, ORD, LHR, HND, etc.).
+     * Mexican Caribbean & Riviera Maya (Cancún & Tulum): American Airlines and Aeromexico are terminating routes to Tulum (MIA to TQO). For any travel into the Riviera Maya / Mexican Caribbean region, routing logic MUST steer passengers into Cancún (CUN) as the primary hub, utilizing alliance awards and nonstops rather than Tulum (TQO).
      * LHR (London Heathrow): British Airways (Oneworld flagship fortress) & Virgin Atlantic (SkyTeam base). Prioritize Avios off-peak sweet spots.
      * CDG & AMS: Air France & KLM (SkyTeam mega-fortresses). Highlight monthly Flying Blue Promo Rewards (business class sweet spots typically 60k–75k pts).
      * FRA & MUC: Lufthansa Group (Star Alliance mega-hubs). Lufthansa Miles & More (exclusive 1:1 via Rove Miles) / Aeroplan.
@@ -950,14 +956,14 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * Bilt Rewards: 1:1 transfer partner with JetBlue TrueBlue (exceptional for Mint suites, Caribbean, and European routes) and Alaska Airlines (Atmos Rewards), alongside Air France/KLM Flying Blue, Avianca LifeMiles, British Airways Avios, Virgin Atlantic, and World of Hyatt.
      * Lufthansa Miles & More (exclusive 1:1 transfer via Rove Miles): Direct access to Lufthansa, SWISS, and Austrian premium cabins (including First Class) without Star Alliance partner blackout windows.
      * SAS EuroBonus (exclusive 1:1 transfer via Rove Miles, SkyTeam): Direct nonstop access to Scandinavian hubs (Stockholm ARN, Oslo OSL, Bergen BGO) and SkyTeam inventory.
-     * Atmos Rewards (Alaska Airlines) & British Airways Avios: Best partner award availability for American Airlines (Oneworld) routes and STARLUX Airlines. When originHub is SEA ONLY, highlight Alaska's direct transpacific nonstops (SEA-KIX, SEA-PPT). Never mention SEA routes for other origins.
+     * Atmos Rewards (Alaska Airlines) & British Airways Avios: Best partner award availability for American Airlines (Oneworld) routes and STARLUX Airlines. When originHub is SEA ONLY, highlight Alaska's direct nonstops (transpacific SEA-KIX, SEA-PPT, and SEA-GDL nonstop serving central Mexico / BJX). Never mention SEA routes for other origins.
      * Air France/KLM Flying Blue promo rewards: Dynamic ranges with business class sweet spots typically from 60k–75k pts, and economy from 15k–25k miles.
      * British Airways/Iberia Avios: Distance-based off-peak sweet spots (typically 34k–42k partner business) and Oneworld domestic redemptions.
      * Virgin Atlantic Flying Club: Strictly for partner premium cabins on long-haul routes (e.g. ANA business awards at 45k–55k or London flights)—DO NOT recommend for domestic US corridors or American Airlines routes.
      * Avianca LifeMiles or Air Canada Aeroplan: Star Alliance routes (including EVA Air and Lufthansa Group) without carrier surcharges.
-     * Copa Airlines ConnectMiles (1:1 transfer partner from Citi ThankYou): Premier Star Alliance connectivity through the Panama City (PTY) "Hub of the Americas" across Central and South America (Cartagena, Medellín, Costa Rica, Guatemala, Peru, Buenos Aires, Santiago) and the Caribbean without carrier surcharges.
+     * Copa Airlines ConnectMiles: 1:1 transfer partner from Citi ThankYou & Rove Miles, and 2:1.5 (1,000 : 750) from Capital One Miles. Premier Star Alliance connectivity through the Panama City (PTY) "Hub of the Americas" across Central and South America (Cartagena, Medellín, Costa Rica, Guatemala, Peru, Buenos Aires, Santiago) and the Caribbean without carrier surcharges.
     - Lodging Architecture (stayStyle) MUST STRICTLY describe housing and accommodations (boutique hotels, traditional machiya townhouses, riads, hillside cabins, apartments, ryokans). stayStyle must NEVER contain flight routes, transit connections, airline names, or departure airports (e.g. NEVER mention Alaska Airlines, nonstops from SEA, or flights). Housing options only.
-    - Route & Award Strategy (flightSecret / pointsPlay): Always tailor specifically to the user's selected originHub. Never mention SEA-KIX, SEA-PPT, or Alaska Airlines Seattle nonstops unless the selected originHub is explicitly SEA.
+    - Route & Award Strategy (flightSecret / pointsPlay): Always tailor specifically to the user's selected originHub. Never mention SEA-KIX, SEA-PPT, SEA-GDL, or Alaska Airlines Seattle nonstops unless the selected originHub is explicitly SEA.
    - Always express point requirements using realistic ranges or partner sweet-spot terminology rather than static single numbers.
    - Use neutral routing framing like "long-haul corridor" or "intercontinental route" rather than directional assumptions like "transatlantic".
 5. Tone & Voice:
