@@ -2,70 +2,188 @@
  * FindYourPassport (findyourpassport.com)
  * Active Transfer Bonuses & Award Arbitrage Engine
  *
- * Declarative configuration for limited-time credit card transfer bonuses.
+ * Sourced directly from Frequent Miler's live transferable currency database.
+ * Strictly excludes hotel transfer partners per cartographic travel focus.
  * Promotions activate and expire automatically based on UTC date boundaries.
  */
 
 var ACTIVE_TRANSFER_BONUSES = [
+  // 1. Chase Ultimate Rewards -> British Airways & Iberia Avios (30% Bonus)
   {
-    id: "amex-flyingblue-nov2026",
-    bank: "American Express",
-    bankCode: "amex",
+    id: "chase-avios-nov2026",
+    bank: "Chase Ultimate Rewards",
+    bankCode: "chase",
+    partnerName: "British Airways & Iberia Avios",
+    partnerCode: "avios",
+    alliance: "Oneworld",
+    bonusPercent: 30,
+    startDate: "2026-11-01T00:00:00Z",
+    endDate: "2026-12-01T23:59:59Z",
+    headline: "30% Chase UR Bonus to British Airways & Iberia Avios",
+    badgeLabel: "+30% Chase Bonus",
+    exampleStandardRate: 34000,
+    cabinContext: "Off-Peak Transatlantic Business",
+    currencyNeeded: "Chase Ultimate Rewards",
+    keywords: ["avios", "british airways", "iberia", "aer lingus"],
+    eligibleDestinations: ["sansebastian", "madrid", "barcelona", "mallorca", "dublin", "london", "edinburgh", "cotswolds"],
+    notes: "Lowers off-peak transatlantic business class on Iberia (Madrid/Bilbao) down to only ~26,000 Chase points, or short-haul European/Caribbean hops from 4,750 Avios.",
+    proTip: "Avios transfer freely and instantly 1:1 between British Airways, Iberia, Qatar Airways, and Aer Lingus."
+  },
+
+  // 2. Citi ThankYou Rewards -> Turkish Airlines Miles & Smiles (40% Bonus)
+  {
+    id: "citi-turkish-nov2026",
+    bank: "Citi ThankYou Rewards",
+    bankCode: "citi",
+    partnerName: "Turkish Airlines Miles & Smiles",
+    partnerCode: "turkish",
+    alliance: "Star Alliance",
+    bonusPercent: 40,
+    startDate: "2026-11-01T00:00:00Z",
+    endDate: "2026-11-30T23:59:59Z",
+    headline: "40% Citi TYP Bonus to Turkish Miles & Smiles",
+    badgeLabel: "+40% Citi Bonus",
+    exampleStandardRate: 45000,
+    cabinContext: "Star Alliance Business / Domestic US Saver",
+    currencyNeeded: "Citi ThankYou Points",
+    keywords: ["turkish", "miles&smiles", "miles & smiles", "istanbul"],
+    eligibleDestinations: ["istanbul", "cappadocia", "kakheti", "athens", "crete", "prague", "budapest"],
+    notes: "A massive 40% bonus brings 45,000-mile business class awards to Europe down to ~32,000 Citi points, and 10,000-mile domestic United flights down to ~7,000 points!",
+    proTip: "One of the highest bonus percentages of the year. Unbeatable value for Star Alliance saver space."
+  },
+
+  // 3. Capital One Miles -> Copa Airlines ConnectMiles (30% Bonus)
+  {
+    id: "capone-copa-nov2026",
+    bank: "Capital One Miles",
+    bankCode: "capone",
+    partnerName: "Copa Airlines ConnectMiles",
+    partnerCode: "copa",
+    alliance: "Star Alliance",
+    bonusPercent: 30,
+    customRatioMultiplier: 0.975, // Base 2:1.5 ratio * 1.30 bonus = 0.975 effective ratio
+    baseRatioMultiplier: 0.75,
+    startDate: "2026-11-02T00:00:00Z",
+    endDate: "2026-12-01T23:59:59Z",
+    headline: "30% Capital One Bonus to Copa Airlines ConnectMiles",
+    badgeLabel: "+30% CapOne Bonus",
+    exampleStandardRate: 25000,
+    cabinContext: "Central & South America Economy / Business",
+    currencyNeeded: "Capital One Miles",
+    keywords: ["copa", "connectmiles", "panama"],
+    eligibleDestinations: ["cartagena", "medellin", "costarica", "guatemala", "peru", "buenosaires", "santiago", "belize", "galapagos", "curacao", "salta", "bariloche"],
+    notes: "With Capital One's base 2:1.5 ratio, a 30% transfer bonus yields 975 Copa miles per 1,000 Capital One miles (near 1:1 parity), unlocking routes via Panama City (PTY) without fuel surcharges.",
+    proTip: "Capital One's newest transfer partner. Solves award inventory bottlenecks across Central and South America."
+  },
+
+  // 4. Capital One Miles -> Air France / KLM Flying Blue (20% Bonus)
+  {
+    id: "capone-flyingblue-nov2026",
+    bank: "Capital One Miles",
+    bankCode: "capone",
     partnerName: "Air France / KLM Flying Blue",
     partnerCode: "flyingblue",
     alliance: "SkyTeam",
-    bonusPercent: 25,
+    bonusPercent: 20,
     startDate: "2026-11-01T00:00:00Z",
     endDate: "2026-11-30T23:59:59Z",
-    headline: "25% Amex MR Transfer Bonus to Flying Blue",
-    badgeLabel: "+25% Amex Bonus",
+    headline: "20% Capital One Bonus to Flying Blue",
+    badgeLabel: "+20% CapOne Bonus",
     exampleStandardRate: 50000,
     cabinContext: "Transatlantic Business Class",
-    currencyNeeded: "Amex Membership Rewards",
+    currencyNeeded: "Capital One Miles",
     keywords: ["flying blue", "air france", "klm"],
     eligibleDestinations: ["paris", "amsterdam", "tahiti", "rotterdam", "lyon", "bordeaux", "nice", "curacao"],
-    notes: "Reduces typical transatlantic saver business awards to Europe or French Polynesia from 50k miles down to only 40,000 Amex points.",
-    proTip: "Pair with monthly Flying Blue Promo Rewards for unmatched transatlantic business class pricing."
+    notes: "Reduces typical 50,000-mile saver business class awards to Europe down to ~41,500 Capital One miles.",
+    proTip: "Combine with monthly Flying Blue Promo Rewards to book transatlantic flights at record-low point totals."
   },
+
+  // 5. American Express -> Virgin Atlantic Flying Club (30% Bonus)
   {
-    id: "chase-virgin-nov2026",
-    bank: "Chase Ultimate Rewards",
-    bankCode: "chase",
+    id: "amex-virgin-nov2026",
+    bank: "American Express",
+    bankCode: "amex",
     partnerName: "Virgin Atlantic Flying Club",
     partnerCode: "virgin",
     alliance: "SkyTeam",
     bonusPercent: 30,
-    startDate: "2026-11-01T00:00:00Z",
-    endDate: "2026-12-10T23:59:59Z",
-    headline: "30% Chase UR Bonus to Virgin Atlantic",
-    badgeLabel: "+30% Chase Bonus",
+    startDate: "2026-11-02T00:00:00Z",
+    endDate: "2026-11-30T23:59:59Z",
+    headline: "30% Amex MR Bonus to Virgin Atlantic Flying Club",
+    badgeLabel: "+30% Amex Bonus",
     exampleStandardRate: 45000,
     cabinContext: "ANA / Delta Partner Long-Haul",
-    currencyNeeded: "Chase Ultimate Rewards",
+    currencyNeeded: "Amex Membership Rewards",
     keywords: ["virgin atlantic", "flying club"],
     eligibleDestinations: ["tokyo", "kyoto", "osaka", "london", "cornwall", "edinburgh"],
-    notes: "Unlocks ANA business class to Tokyo for only 35,000 Chase points (transferred to 45,500 Virgin points) or transatlantic Delta routes without fuel surcharges.",
-    proTip: "Best utilized on partner premium cabins (ANA, Delta) rather than Virgin-operated flights through London."
+    notes: "Unlocks ANA business class to Tokyo for only ~34,500 Amex points, or Delta transatlantic flights to Europe without fuel surcharges.",
+    proTip: "Target partner redemptions on ANA and Delta to avoid London Heathrow's high carrier fees."
   },
+
+  // 6. Capital One Miles -> Virgin Atlantic Flying Club (30% Bonus)
   {
-    id: "capone-avios-nov2026",
+    id: "capone-virgin-nov2026",
     bank: "Capital One Miles",
     bankCode: "capone",
-    partnerName: "British Airways & Iberia Avios",
-    partnerCode: "avios",
-    alliance: "Oneworld",
-    bonusPercent: 20,
-    startDate: "2026-11-01T00:00:00Z",
-    endDate: "2026-12-05T23:59:59Z",
-    headline: "20% Capital One Bonus to British Airways Avios",
-    badgeLabel: "+20% CapOne Bonus",
-    exampleStandardRate: 34000,
-    cabinContext: "Off-Peak Transatlantic Business",
+    partnerName: "Virgin Atlantic Flying Club",
+    partnerCode: "virgin",
+    alliance: "SkyTeam",
+    bonusPercent: 30,
+    startDate: "2026-10-21T00:00:00Z",
+    endDate: "2026-11-20T23:59:59Z",
+    headline: "30% Capital One Bonus to Virgin Atlantic Flying Club",
+    badgeLabel: "+30% CapOne Bonus",
+    exampleStandardRate: 45000,
+    cabinContext: "ANA / Delta Partner Long-Haul",
     currencyNeeded: "Capital One Miles",
-    keywords: ["avios", "british airways", "iberia"],
-    eligibleDestinations: ["sansebastian", "madrid", "barcelona", "mallorca", "dublin", "cotswolds"],
-    notes: "Lowers legendary off-peak transatlantic business class on Iberia or British Airways down to ~28,500 Capital One miles with minimal taxes.",
-    proTip: "Avios pool 1:1 freely across British Airways, Iberia, Qatar Airways, and Finnair."
+    keywords: ["virgin atlantic", "flying club"],
+    eligibleDestinations: ["tokyo", "kyoto", "osaka", "london", "cornwall", "edinburgh"],
+    notes: "Transfers 1,000 Capital One miles to 1,300 Virgin points, perfect for ANA suite redemptions.",
+    proTip: "Pair with Capital One Venture X miles for instant partner bookings."
+  },
+
+  // 7. Citi ThankYou Rewards -> Cathay Pacific Asia Miles (10% Bonus)
+  {
+    id: "citi-asiamiles-nov2026",
+    bank: "Citi ThankYou Rewards",
+    bankCode: "citi",
+    partnerName: "Cathay Pacific Asia Miles",
+    partnerCode: "asiamiles",
+    alliance: "Oneworld",
+    bonusPercent: 10,
+    startDate: "2026-10-25T00:00:00Z",
+    endDate: "2026-11-14T23:59:59Z",
+    headline: "10% Citi TYP Bonus to Cathay Pacific Asia Miles",
+    badgeLabel: "+10% Citi Bonus",
+    exampleStandardRate: 42000,
+    cabinContext: "Transpacific & Asia Oneworld",
+    currencyNeeded: "Citi ThankYou Points",
+    keywords: ["asia miles", "cathay", "cathay pacific", "hong kong"],
+    eligibleDestinations: ["hongkong", "taipei", "singapore", "bangkok", "tokyo"],
+    notes: "Provides a 10% boost for Oneworld multi-carrier awards and long-haul premium cabins into Asia via Hong Kong.",
+    proTip: "Cathay Pacific releases premium cabin award space to Asia Miles members before partner programs."
+  },
+
+  // 8. Rove Miles -> JetBlue TrueBlue (20% Bonus)
+  {
+    id: "rove-jetblue-nov2026",
+    bank: "Rove Miles",
+    bankCode: "rove",
+    partnerName: "JetBlue TrueBlue",
+    partnerCode: "jetblue",
+    alliance: "Independent",
+    bonusPercent: 20,
+    startDate: "2026-10-15T00:00:00Z",
+    endDate: "2026-11-14T23:59:59Z",
+    headline: "20% Rove Miles Bonus to JetBlue TrueBlue",
+    badgeLabel: "+20% Rove Bonus",
+    exampleStandardRate: 25000,
+    cabinContext: "Mint Suites & Caribbean Nonstops",
+    currencyNeeded: "Rove Miles",
+    keywords: ["jetblue", "trueblue", "mint"],
+    eligibleDestinations: ["aruba", "curacao", "puertorico", "turks", "stlucia", "london", "paris", "amsterdam", "dublin", "edinburgh"],
+    notes: "A 20% bonus into JetBlue TrueBlue maximizes value on Mint lie-flat suites to Europe and nonstop Caribbean beach routes with zero fuel surcharges.",
+    proTip: "Rove Miles and Bilt are among the few currencies offering direct 1:1 JetBlue transfers."
   }
 ];
 
@@ -118,13 +236,18 @@ function calculateArbitrageMath(bonus, customBaselineRate) {
   if (!bonus) return null;
 
   const baseline = customBaselineRate || bonus.exampleStandardRate || 50000;
-  const ratioMultiplier = 1 + (bonus.bonusPercent / 100);
+  
+  // Custom ratio handling (e.g. Capital One 2:1.5 with bonus) vs standard 1:1 base
+  const ratioMultiplier = bonus.customRatioMultiplier || (1 + (bonus.bonusPercent / 100));
+  const baseMultiplier = bonus.baseRatioMultiplier || 1.0;
 
   // Bank points needed rounded to closest 500 points for real-world card transfer intervals
   const rawNeeded = baseline / ratioMultiplier;
   const pointsNeeded = Math.round(rawNeeded / 500) * 500;
-  const pointsSaved = Math.max(0, baseline - pointsNeeded);
-  const netDiscountPercent = Math.round((pointsSaved / baseline) * 100);
+  
+  const standardNeeded = Math.round((baseline / baseMultiplier) / 500) * 500;
+  const pointsSaved = Math.max(0, standardNeeded - pointsNeeded);
+  const netDiscountPercent = Math.round((pointsSaved / standardNeeded) * 100);
 
   const now = new Date();
   const endDate = new Date(bonus.endDate);
