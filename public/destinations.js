@@ -1094,7 +1094,7 @@ var DESTINATIONS = {
         name: "Fernando de Noronha, Brazil", code: "FEN", flag: "🇧🇷", archetype: "The Coastal Recharger", mapQuery: "Baia do Sancho, Fernando de Noronha, Brazil", coordinates: { lat: -3.8574, lng: -32.4297 }, region: "Americas/Caribbean", baseFare: 890,
         narrative: "South America's premier protected oceanic sanctuary. Volcanic black basalt spires rising from sapphire seas, spinner dolphin pods, green sea turtle nurseries, and strictly regulated barefoot paradise.",
         cash: "Intimate family-run pousadas with hammock verandas ($120-$220/night); unhurried seafood dining under coconut palms.",
-        points: "Book GOL award flights using American Airlines AAdvantage miles or LATAM flights via partner programs; credit card travel portal redemptions for boutique eco-pousadas.",
+        points: "Book GOL award flights using Alaska Airlines Atmos Rewards / American Airlines AAdvantage or LATAM flights via partner programs; credit card travel portal redemptions for boutique eco-pousadas.",
         season: "August – February",
         seasonReason: "Calm, crystal-clear water visibility exceeding 150 feet for diving and snorkeling; gentle trade winds.",
         weatherTip: "Visitor numbers are strictly limited by national park quotas—secure environmental tax permits (TPA) online in advance.",

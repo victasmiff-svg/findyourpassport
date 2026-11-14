@@ -1212,7 +1212,7 @@
 
     if (!flightSecret) {
       const isPacificDest = ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore', 'bali', 'thailand', 'phuket', 'hanoi', 'halong', 'malaysia', 'sydney', 'melbourne', 'newzealand', 'tahiti'].includes(key);
-      const isLatinDest = ['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos', 'salta', 'bariloche', 'atacama', 'curacao', 'aruba'].includes(key);
+      const isLatinDest = ['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos', 'salta', 'bariloche', 'atacama', 'curacao', 'aruba', 'noronha'].includes(key);
 
       if (hub === 'ORD' && dest.code === 'JFK') {
         flightSecret = `From ORD: High-frequency nonstop corridor on American Airlines (Oneworld). Primary award seat space is reliably booked through Atmos Rewards (Alaska Airlines) or British Airways Avios using American Airlines as the operating carrier, alongside United MileagePlus / Aeroplan into Newark (EWR). ${dest.points}`;

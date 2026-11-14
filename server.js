@@ -548,7 +548,7 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
 
   if (!flightSecret) {
     const isPacificDest = ['taipei', 'tokyo', 'kyoto', 'seoul', 'hongkong', 'singapore', 'bali', 'thailand', 'phuket', 'hanoi', 'halong', 'malaysia', 'sydney', 'melbourne', 'newzealand', 'tahiti'].includes(key);
-    const isLatinDest = ['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos', 'salta', 'bariloche', 'atacama', 'curacao', 'aruba'].includes(key);
+    const isLatinDest = ['cartagena', 'medellin', 'costarica', 'guatemala', 'peru', 'buenosaires', 'santiago', 'belize', 'galapagos', 'salta', 'bariloche', 'atacama', 'curacao', 'aruba', 'noronha'].includes(key);
 
     if (hub === 'ORD' && dest.code === 'JFK') {
       flightSecret = `From ORD: High-frequency nonstop corridor on American Airlines (Oneworld). Primary award seat space is reliably booked through Atmos Rewards (Alaska Airlines) or British Airways Avios using American Airlines as the operating carrier, alongside United MileagePlus / Aeroplan into Newark (EWR). ${dest.points}`;
@@ -956,7 +956,7 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * Bilt Rewards: 1:1 transfer partner with JetBlue TrueBlue (exceptional for Mint suites, Caribbean, and European routes) and Alaska Airlines (Atmos Rewards), alongside Air France/KLM Flying Blue, Avianca LifeMiles, British Airways Avios, Virgin Atlantic, and World of Hyatt.
      * Lufthansa Miles & More (exclusive 1:1 transfer via Rove Miles): Direct access to Lufthansa, SWISS, and Austrian premium cabins (including First Class) without Star Alliance partner blackout windows.
      * SAS EuroBonus (exclusive 1:1 transfer via Rove Miles, SkyTeam): Direct nonstop access to Scandinavian hubs (Stockholm ARN, Oslo OSL, Bergen BGO) and SkyTeam inventory.
-     * Atmos Rewards (Alaska Airlines) & British Airways Avios: Best partner award availability for American Airlines (Oneworld) routes and STARLUX Airlines. When originHub is SEA ONLY, highlight Alaska's direct nonstops (transpacific SEA-KIX, SEA-PPT, and SEA-GDL nonstop serving central Mexico / BJX). Never mention SEA routes for other origins.
+     * Atmos Rewards (Alaska Airlines) & British Airways Avios: Best partner award availability for American Airlines (Oneworld) routes and STARLUX Airlines, with award access on regional South American partner GOL Linhas Aéreas. When originHub is SEA ONLY, highlight Alaska's direct nonstops (transpacific SEA-KIX, SEA-PPT, and SEA-GDL nonstop serving central Mexico / BJX). Never mention SEA routes for other origins.
      * Air France/KLM Flying Blue promo rewards: Dynamic ranges with business class sweet spots typically from 60k–75k pts, and economy from 15k–25k miles.
      * British Airways/Iberia Avios: Distance-based off-peak sweet spots (typically 34k–42k partner business) and Oneworld domestic redemptions.
      * Virgin Atlantic Flying Club: Strictly for partner premium cabins on long-haul routes (e.g. ANA business awards at 45k–55k or London flights)—DO NOT recommend for domestic US corridors or American Airlines routes.
