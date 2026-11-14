@@ -1243,7 +1243,7 @@
       } else if (hub === 'MAD') {
         flightSecret = `From MAD (Iberia Oneworld Fortress): ${dest.points} Take advantage of legendary 34k–42k off-peak business class Avios sweet spots to the Americas.`;
       } else if (hub === 'HND') {
-        flightSecret = `From Tokyo (ANA & JAL Dual Hub): ${dest.points} Target ANA premium cabins via Virgin Atlantic/Aeroplan, or JAL via Atmos Rewards / British Airways Avios.`;
+        flightSecret = `From Tokyo (ANA & JAL Dual Hub): ${dest.points} Target JAL Mileage Bank (1:1 from Bilt/Citi/Rove, 2:1.5 from Capital One) or partner awards via Atmos Rewards / British Airways Avios, alongside ANA premium cabins via Virgin Atlantic/Aeroplan.`;
       } else if (hub === 'HKG') {
         flightSecret = `From HKG (Cathay Pacific Fortress): ${dest.points} Target Asia Miles or partner awards via Atmos Rewards (Alaska Airlines) and British Airways Avios.`;
       } else if (hub === 'SIN') {

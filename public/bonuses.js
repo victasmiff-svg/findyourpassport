@@ -120,7 +120,31 @@ var ACTIVE_TRANSFER_BONUSES = [
     proTip: "Target partner redemptions on Delta to avoid London Heathrow's high carrier fees."
   },
 
-  // 6. Capital One Miles -> Virgin Atlantic Flying Club (30% Bonus)
+  // 6. Capital One Miles -> Japan Airlines (JAL) Mileage Bank (30% Bonus)
+  {
+    id: "capone-jal-nov2026",
+    bank: "Capital One Miles",
+    bankCode: "capone",
+    partnerName: "Japan Airlines (JAL) Mileage Bank",
+    partnerCode: "jal",
+    alliance: "Oneworld",
+    bonusPercent: 30,
+    customRatioMultiplier: 0.975, // Base 2:1.5 ratio (0.75) * 1.30 bonus = 0.975 effective ratio (1,000 CapOne = 975 JAL miles)
+    baseRatioMultiplier: 0.75,    // Standard Capital One 2:1.5 transfer ratio
+    startDate: "2026-11-01T00:00:00Z",
+    endDate: "2026-12-15T23:59:59Z",
+    headline: "30% Capital One Bonus to Japan Airlines (JAL) Mileage Bank",
+    badgeLabel: "+30% CapOne Bonus",
+    exampleStandardRate: 50000,
+    cabinContext: "Transpacific Business / Intra-Japan Saver",
+    currencyNeeded: "Capital One Miles",
+    keywords: ["jal", "japan airlines", "mileage bank"],
+    eligibleDestinations: ["tokyo", "kyoto", "osaka", "sapporo"],
+    notes: "Capital One transfers at a non-standard 2:1.5 ratio (1,000 miles = 750 JAL miles). With this 30% transfer bonus, 1,000 Capital One miles yield 975 JAL miles (near 1:1 parity), overcoming the baseline conversion penalty.",
+    proTip: "Unlike Citi, Bilt, and Rove which transfer 1:1, Capital One transfers at 2:1.5. Utilize transfer bonuses to restore near 1:1 value on JAL awards."
+  },
+
+  // 7. Capital One Miles -> Virgin Atlantic Flying Club (30% Bonus)
   {
     id: "capone-virgin-nov2026",
     bank: "Capital One Miles",
@@ -137,7 +161,7 @@ var ACTIVE_TRANSFER_BONUSES = [
     cabinContext: "ANA / Delta Partner Long-Haul",
     currencyNeeded: "Capital One Miles",
     keywords: ["virgin atlantic", "flying club"],
-    eligibleDestinations: ["tokyo", "kyoto", "osaka", "london", "cornwall", "edinburgh"],
+    eligibleDestinations: ["london", "cornwall", "edinburgh"],
     notes: "Transfers 1,000 Capital One miles to 1,300 Virgin points, perfect for ANA suite redemptions.",
     proTip: "Pair with Capital One Venture X miles for instant partner bookings."
   },

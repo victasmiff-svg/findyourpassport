@@ -579,7 +579,7 @@ function hydrateDestination(key, dest, manifest, rank, geminiOverride = null) {
     } else if (hub === 'MAD') {
       flightSecret = `From MAD (Iberia Oneworld Fortress): ${dest.points} Take advantage of legendary 34k–42k off-peak business class Avios sweet spots to the Americas.`;
     } else if (hub === 'HND') {
-      flightSecret = `From Tokyo (ANA & JAL Dual Hub): ${dest.points} Target ANA premium cabins via Virgin Atlantic/Aeroplan, or JAL via Atmos Rewards / British Airways Avios.`;
+      flightSecret = `From Tokyo (ANA & JAL Dual Hub): ${dest.points} Target JAL Mileage Bank (1:1 from Bilt/Citi/Rove, 2:1.5 from Capital One) or partner awards via Atmos Rewards / British Airways Avios, alongside ANA premium cabins via Virgin Atlantic/Aeroplan.`;
     } else if (hub === 'HKG') {
       flightSecret = `From HKG (Cathay Pacific Fortress): ${dest.points} Target Asia Miles or partner awards via Atmos Rewards (Alaska Airlines) and British Airways Avios.`;
     } else if (hub === 'SIN') {
@@ -937,7 +937,7 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * FRA & MUC: Lufthansa Group (Star Alliance mega-hubs). Lufthansa Miles & More (exclusive 1:1 via Rove Miles) / Aeroplan.
      * Scandinavian Corridors (ARN, BGO, OSL): SAS (SkyTeam). Prioritize SAS EuroBonus (exclusive 1:1 transfer via Rove Miles) alongside SkyTeam partner redemptions.
      * MAD (Madrid-Barajas): Iberia Oneworld fortress. Off-peak Avios sweet spots (34k–42k pts business to the Americas).
-     * HND/NRT (Tokyo): ANA (Star Alliance via Virgin/Aeroplan) & JAL (Oneworld via Atmos/Avios).
+     * HND/NRT (Tokyo): ANA (Star Alliance via Virgin/Aeroplan) & JAL (Oneworld via JAL Mileage Bank 1:1 from Bilt/Citi/Rove, 2:1.5 from Capital One; or via Atmos/Avios).
      * ICN (Seoul): Korean Air (SkyTeam fortress, combined with Asiana).
      * HKG (Hong Kong): Cathay Pacific (Oneworld fortress). Asia Miles & Atmos Rewards / Avios.
      * SIN (Singapore): Singapore Airlines (Star Alliance flagship). KrisFlyer & Aeroplan.
@@ -962,6 +962,7 @@ CRITICAL RULES & STRICT CONSTRAINTS:
      * Virgin Atlantic Flying Club: Strictly for partner premium cabins on long-haul routes (e.g. ANA business awards at 45k–55k or London flights)—DO NOT recommend for domestic US corridors or American Airlines routes.
      * Avianca LifeMiles or Air Canada Aeroplan: Star Alliance routes (including EVA Air and Lufthansa Group) without carrier surcharges.
      * Copa Airlines ConnectMiles: 1:1 transfer partner from Citi ThankYou & Rove Miles, and 2:1.5 (1,000 : 750) from Capital One Miles. Premier Star Alliance connectivity through the Panama City (PTY) "Hub of the Americas" across Central and South America (Cartagena, Medellín, Costa Rica, Guatemala, Peru, Buenos Aires, Santiago) and the Caribbean without carrier surcharges.
+     * JAL (Japan Airlines) Mileage Bank: Transfers 1:1 from Citi ThankYou Rewards, Bilt Rewards, and Rove Miles, and 2:1.5 (1,000 : 750) from Capital One Miles (note: non-1:1 ratio must be surfaced to users; a 30% transfer bonus restores near 1:1 parity at 975 miles). Also transfers 3:1 from Marriott Bonvoy with a 5k bonus per 60k points. Prime program for booking JAL First/Business Class or distance-based partner awards.
     - Lodging Architecture (stayStyle) MUST STRICTLY describe housing and accommodations (boutique hotels, traditional machiya townhouses, riads, hillside cabins, apartments, ryokans). stayStyle must NEVER contain flight routes, transit connections, airline names, or departure airports (e.g. NEVER mention Alaska Airlines, nonstops from SEA, or flights). Housing options only.
     - Route & Award Strategy (flightSecret / pointsPlay): Always tailor specifically to the user's selected originHub. Never mention SEA-KIX, SEA-PPT, SEA-GDL, or Alaska Airlines Seattle nonstops unless the selected originHub is explicitly SEA.
    - Always express point requirements using realistic ranges or partner sweet-spot terminology rather than static single numbers.
